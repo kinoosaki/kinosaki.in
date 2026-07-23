@@ -12,32 +12,33 @@
 
 /* ════════════════════════════════════════════
    M3 Expressive · Android 16 / Pixel dark theme
-   Seed: #A8C7FA (Pixel's default cornflower blue)
+   Seed: #C89060 (warm amber-gold from avatar hair)
+   Tertiary: #B8D9D7 (soft teal from avatar bg)
    ════════════════════════════════════════════ */
 :root {
-  /* Tonal palette — cornflower-blue seed */
-  --pri:        #A8C7FA;   /* primary */
-  --pri-con:    #004A9C;   /* primary-container */
-  --on-pri-con: #D6E3FF;   /* on-primary-container */
-  --sec:        #BEC6DC;   /* secondary */
-  --sec-con:    #3E4759;   /* secondary-container */
-  --on-sec-con: #DAE2F9;   /* on-secondary-container */
-  --ter:         #DDB9F4;  /* tertiary – soft violet */
-  --ter-con:    #593E71;   /* tertiary-container */
-  --on-ter-con: #F2DAFF;   /* on-tertiary-container */
+  /* Tonal palette — amber-gold seed */
+  --pri:        #F0BC80;   /* primary — warm amber */
+  --pri-con:    #6B3E10;   /* primary-container */
+  --on-pri-con: #FFE0B8;   /* on-primary-container */
+  --sec:        #D4BFA8;   /* secondary — muted sand */
+  --sec-con:    #4A3828;   /* secondary-container */
+  --on-sec-con: #EDD8C0;   /* on-secondary-container */
+  --ter:        #A8CECC;   /* tertiary — soft teal */
+  --ter-con:    #1E4A48;   /* tertiary-container */
+  --on-ter-con: #C8E8E6;   /* on-tertiary-container */
 
-  /* Surfaces */
-  --bg:          #101418;  /* Pixel dark bg — slightly blue-tinted, not pure black */
-  --surf:        #101418;
-  --surf-low:    #181C21;
-  --surf-con:    #1D2128;  /* card surface */
-  --surf-hi:     #272C34;  /* elevated card */
-  --surf-top:    #313740;
+  /* Surfaces — warm-tinted dark (amber seed shifts bg slightly warm) */
+  --bg:          #171210;
+  --surf:        #171210;
+  --surf-low:    #201A17;
+  --surf-con:    #272018;  /* card surface */
+  --surf-hi:     #302820;  /* elevated card */
+  --surf-top:    #3A3028;
 
-  --on-surf:     #E1E2E8;
-  --on-surf-var: #C1C7D5;
-  --outline:     #8B92A0;
-  --outline-var: #41474F;
+  --on-surf:     #EDE0D4;
+  --on-surf-var: #C8B8A8;
+  --outline:     #9A8878;
+  --outline-var: #4A3E34;
 
   /* Shape — M3 Expressive uses "morphed" shapes, very round */
   --r-xs:   6px;
@@ -278,17 +279,16 @@ body {
 .qs-icon {
   width: 44px;
   height: 44px;
-  border-radius: var(--r-md);
+  border-radius: var(--r-pill);
   background: var(--pri-con);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform .4s var(--spring), border-radius .3s var(--emph);
+  transition: transform .4s var(--spring);
 }
 .qs-tile:hover .qs-icon {
   transform: rotate(-8deg) scale(1.12);
-  border-radius: var(--r-pill);
 }
 .qs-icon svg {
   width: 20px;
