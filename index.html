@@ -70,6 +70,9 @@ body {
   overflow-x: hidden;
 }
 
+/* ══════════════════════════════════════
+   GUNS.LOL STYLE ENTRY OVERLAY & BLUR
+   ══════════════════════════════════════ */
 .page {
   max-width: 600px;
   margin: 0 auto;
@@ -77,18 +80,131 @@ body {
   display: flex;
   flex-direction: column;
   gap: 28px;
+  filter: blur(20px);
+  scale: 0.96;
+  opacity: 0.6;
+  user-select: none;
+  pointer-events: none;
+  transition: filter 0.8s var(--std), scale 0.8s var(--std), opacity 0.8s var(--std);
+}
+
+body.entered .page {
+  filter: blur(0);
+  scale: 1;
+  opacity: 1;
+  user-select: auto;
+  pointer-events: auto;
+}
+
+/* Glassmorphic Click-to-Enter Overlay */
+.entry-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(26, 16, 8, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.6s var(--std), visibility 0.6s var(--std);
+}
+
+body.entered .entry-overlay {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.entry-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: entry-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.entry-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-pill);
+  background: var(--pri-con);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.entry-icon svg,
+.entry-icon svg path {
+  width: 28px;
+  height: 28px;
+  fill: #ffffff !important;
+  margin-left: 1.5px;
+}
+
+.entry-title {
+  font-variation-settings: 'wght' 600, 'wdth' 100, 'opsz' 14;
+  font-size: 15px;
+  letter-spacing: 0.1em;
+  text-transform: lowercase;
+  color: var(--on-surf);
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+@keyframes entry-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+/* Floating Audio Toggle Button (FAB) */
+.audio-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-pill);
+  background: var(--surf-hi);
+  border: 1px solid var(--outline-var);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--std), transform 0.5s var(--spring), background 0.2s;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+body.entered .audio-toggle {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.audio-toggle:hover {
+  background: var(--pri-con);
+  transform: scale(1.1);
+}
+
+/* FORCE AUDIO SVG PATHS TO BE PURE WHITE */
+.audio-toggle svg,
+.audio-toggle svg path {
+  width: 22px;
+  height: 22px;
+  fill: #ffffff !important;
 }
 
 /* ══════════════════════════════════════
    LOCKSCREEN-STYLE HERO
-   Pixel 9 lock screen: huge pill clock,
-   identity info below
    ══════════════════════════════════════ */
 .hero {
   animation: fade-up .5s var(--std) both;
 }
 
-/* The big Pixel clock pill — Android 16 lock screen */
 .clock-pill {
   background: var(--pri-con);
   border-radius: var(--r-2xl);
@@ -101,7 +217,6 @@ body {
   overflow: hidden;
 }
 
-/* Tonal shimmer — Pixel uses a subtle gradient on lock screen surfaces */
 .clock-pill::before {
   content: '';
   position: absolute;
@@ -126,7 +241,6 @@ body {
   z-index: 1;
 }
 
-/* Display Large — Pixel lock screen name, thick & wide */
 .hero-name {
   font-variation-settings: 'wght' 800, 'wdth' 115, 'opsz' 40;
   font-size: clamp(2.6rem, 10vw, 4rem);
@@ -143,7 +257,6 @@ body {
   letter-spacing: 0.01em;
 }
 
-/* Assist chips — pill shaped, M3 Expressive */
 .chip-row {
   display: flex;
   flex-wrap: wrap;
@@ -166,7 +279,6 @@ body {
   box-shadow: 0 4px 14px rgba(0,0,0,0.4);
 }
 
-/* Bio — Body Large */
 .bio {
   font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
   font-size: 14.5px;
@@ -231,8 +343,6 @@ body {
 
 /* ══════════════════════════════════════
    QUICK SETTINGS GRID
-   Pixel 9 / Android 16: 2-column tiles,
-   very round, tonal, icon + label layout
    ══════════════════════════════════════ */
 .qs-grid {
   display: grid;
@@ -259,7 +369,6 @@ body {
   border: 1px solid transparent;
 }
 
-/* State layer — M3 hover 8% */
 .qs-tile::after {
   content: '';
   position: absolute;
@@ -277,7 +386,6 @@ body {
   border-color: var(--outline-var);
 }
 
-/* Icon container — Pixel uses a tonal container for QS icons */
 .qs-icon {
   width: 44px;
   height: 44px;
@@ -298,7 +406,6 @@ body {
   fill: var(--on-pri-con);
 }
 
-.qs-info {}
 .qs-name {
   font-variation-settings: 'wght' 600, 'wdth' 100, 'opsz' 13;
   font-size: 13.5px;
@@ -317,8 +424,6 @@ body {
 
 /* ══════════════════════════════════════
    WIDGET CARDS
-   Pixel widget style: rounded pill header,
-   tonal container, elevated surface
    ══════════════════════════════════════ */
 .wcard {
   background: var(--surf-low);
@@ -334,7 +439,6 @@ body {
   padding: 14px 18px 12px;
 }
 
-/* Pixel: label inside a small pill on the widget header */
 .wcard-pill {
   font-variation-settings: 'wght' 600, 'wdth' 100, 'opsz' 11;
   font-size: 11px;
@@ -374,59 +478,6 @@ body {
 .wcard-body a img { transition: opacity .2s, transform .35s var(--spring); }
 .wcard-body a:hover img { opacity:.88; transform:scale(1.015); }
 
-/* ══════════════════════════════════════
-   FOOTER — Pixel FAB style
-   ══════════════════════════════════════ */
-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 8px;
-  animation: fade-up .45s var(--std) .4s both;
-}
-
-/* Extended FAB — M3 Expressive */
-.footer-fab {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--pri-con);
-  color: var(--on-pri-con);
-  border-radius: var(--r-pill);
-  padding: 12px 24px;
-  font-variation-settings: 'wght' 600, 'wdth' 100, 'opsz' 13;
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  cursor: default;
-  transition: transform .4s var(--spring), box-shadow .2s;
-}
-.footer-fab:hover {
-  transform: scale(1.04) translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-}
-.footer-fab-icon {
-  font-size: 16px;
-}
-
-/* Three tonal dots */
-.dot-trio {
-  display: flex;
-  gap: 7px;
-}
-.dot-trio span {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  animation: trio-bounce 2s ease-in-out infinite;
-}
-.dot-trio span:nth-child(1) { background: var(--pri); }
-.dot-trio span:nth-child(2) { background: var(--ter); animation-delay: .22s; }
-.dot-trio span:nth-child(3) { background: var(--sec); animation-delay: .44s; }
-@keyframes trio-bounce {
-  0%,100% { transform:translateY(0); opacity:.45; }
-  50%     { transform:translateY(-6px); opacity:1; }
-}
-
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -441,6 +492,29 @@ footer {
 </style>
 </head>
 <body>
+
+<!-- BACKGROUND AUDIO -->
+<audio id="bg-audio" loop preload="auto">
+  <source src="https://file.garden/aYCdlBqIC3TWlgqn/16%20-%20All%20Night%20Radio.flac" type="audio/flac" />
+</audio>
+
+<!-- GUNS.LOL STYLE OVERLAY -->
+<div id="entry-overlay" class="entry-overlay">
+  <div class="entry-content">
+    <div class="entry-icon">
+      <svg viewBox="0 0 24 24"><path fill="#ffffff" d="M8 5v14l11-7z"/></svg>
+    </div>
+    <span class="entry-title">click anywhere to enter</span>
+  </div>
+</div>
+
+<!-- FLOATING AUDIO TOGGLE BUTTON -->
+<button id="audio-toggle" class="audio-toggle" aria-label="Toggle Audio">
+  <svg id="audio-icon" viewBox="0 0 24 24">
+    <path fill="#ffffff" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+  </svg>
+</button>
+
 <main class="page">
 
   <!-- HERO — Pixel lock screen pill -->
@@ -574,8 +648,36 @@ footer {
     </div>
   </div>
 
-
-
 </main>
+
+<!-- SCRIPT TO HANDLE ENTRY CLICK & AUDIO CONTROLS -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const overlay = document.getElementById('entry-overlay');
+  const audio = document.getElementById('bg-audio');
+  const audioToggle = document.getElementById('audio-toggle');
+  const audioIcon = document.getElementById('audio-icon');
+
+  const volumeOnIcon = `<path fill="#ffffff" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>`;
+  const volumeOffIcon = `<path fill="#ffffff" d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>`;
+
+  // Enter site on click
+  overlay.addEventListener('click', () => {
+    document.body.classList.add('entered');
+    audio.play().catch(err => console.log('Audio playback prevented:', err));
+  });
+
+  // Toggle Mute / Unmute
+  audioToggle.addEventListener('click', () => {
+    if (audio.paused) {
+      audio.play();
+      audioIcon.innerHTML = volumeOnIcon;
+    } else {
+      audio.pause();
+      audioIcon.innerHTML = volumeOffIcon;
+    }
+  });
+});
+</script>
 </body>
 </html>
