@@ -316,34 +316,41 @@ body {
 }
 
 /* ══════════════════════════════════════
-   WIDGET CARDS
-   Pixel widget style: rounded pill header,
-   tonal container, elevated surface
+   WIDGET CARDS GRID
    ══════════════════════════════════════ */
+.widget-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
 .wcard {
   background: var(--surf-low);
   border-radius: var(--r-2xl);
   overflow: hidden;
   border: 1px solid var(--outline-var);
+  display: flex;
+  flex-direction: column;
 }
 
 .wcard-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 18px 12px;
+  padding: 10px 14px 8px;
 }
 
 /* Pixel: label inside a small pill on the widget header */
 .wcard-pill {
   font-variation-settings: 'wght' 600, 'wdth' 100, 'opsz' 11;
-  font-size: 11px;
-  letter-spacing: 0.05em;
+  font-size: 10px;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   background: var(--surf-top);
   color: var(--on-surf-var);
   border-radius: var(--r-pill);
-  padding: 5px 14px;
+  padding: 4px 10px;
+  white-space: nowrap;
 }
 
 .live-dot {
@@ -365,11 +372,21 @@ body {
   50%      { opacity:.4; transform:scale(.75); }
 }
 
-.wcard-body { padding: 0 14px 14px; }
-.wcard-body img {
+.wcard-body {
+  padding: 0 10px 10px;
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+.wcard-body a {
   width: 100%;
   display: block;
-  border-radius: var(--r-lg);
+}
+.wcard-body img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: var(--r-md);
 }
 .wcard-body a img { transition: opacity .2s, transform .35s var(--spring); }
 .wcard-body a:hover img { opacity:.88; transform:scale(1.015); }
@@ -435,7 +452,7 @@ footer {
 @media (max-width: 480px) {
   .clock-pill { flex-direction: column; align-items: flex-start; gap: 14px; }
   .hero-name { font-size: 2.6rem; }
-  .qs-grid { grid-template-columns: 1fr 1fr; }
+  .qs-grid, .widget-grid { grid-template-columns: 1fr 1fr; }
   .page { padding: 28px 14px 60px; gap: 22px; }
 }
 </style>
@@ -473,6 +490,39 @@ footer {
       <span class="pill">Tech</span>
       <span class="pill">Gaming</span>
       <span class="pill">Badminton</span>
+    </div>
+  </div>
+
+  <!-- SIDE-BY-SIDE WIDGETS -->
+  <div class="panel">
+    <div class="widget-grid">
+
+      <!-- DISCORD STATUS -->
+      <div class="wcard">
+        <div class="wcard-head">
+          <span class="wcard-pill">Discord</span>
+          <div class="live-dot"></div>
+        </div>
+        <div class="wcard-body">
+          <a href="https://discord.com/users/947775206141870111" target="_blank" rel="noopener">
+            <img src="https://discord.c99.nl/widget/theme-3/947775206141870111.png" alt="Discord Status" />
+          </a>
+        </div>
+      </div>
+
+      <!-- NOW PLAYING -->
+      <div class="wcard">
+        <div class="wcard-head">
+          <span class="wcard-pill">Now Playing</span>
+          <div class="live-dot"></div>
+        </div>
+        <div class="wcard-body">
+          <a href="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&redirect=true" target="_blank" rel="noopener">
+            <img src="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&cover_image=true&theme=natemoo-re&show_offline=true&background_color=121212&interchange=true&profanity=false&hide_remaster=false&bar_color=53b14f&bar_color_cover=true" alt="Spotify Now Playing" />
+          </a>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -528,53 +578,6 @@ footer {
 
     </div>
   </div>
-
-  <!-- DISCORD STATUS -->
-  <div class="panel">
-    <div class="wcard">
-      <div class="wcard-head">
-        <span class="wcard-pill">Discord Status</span>
-        <div class="live-dot"></div>
-      </div>
-      <div class="wcard-body">
-        <a href="https://discord.com/users/947775206141870111" target="_blank" rel="noopener">
-          <img src="https://discord.c99.nl/widget/theme-3/947775206141870111.png" alt="Discord Status" />
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- NOW PLAYING -->
-  <div class="panel">
-    <div class="wcard">
-      <div class="wcard-head">
-        <span class="wcard-pill">Now Playing</span>
-        <div class="live-dot"></div>
-      </div>
-      <div class="wcard-body">
-        <a href="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&redirect=true" target="_blank" rel="noopener">
-          <img src="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&cover_image=true&theme=natemoo-re&show_offline=true&background_color=121212&interchange=true&profanity=false&hide_remaster=false&bar_color=53b14f&bar_color_cover=true" alt="Spotify Now Playing" />
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <!-- RECENTLY PLAYED -->
-  <div class="panel">
-    <div class="wcard">
-      <div class="wcard-head">
-        <span class="wcard-pill">Recently Played</span>
-        <div class="live-dot idle"></div>
-      </div>
-      <div class="wcard-body">
-        <a href="https://www.last.fm/user/itsyuriko" target="_blank" rel="noopener">
-          <img src="https://lastfm-recently-played.vercel.app/api?user=itsyuriko" alt="Last.fm Recently Played" />
-        </a>
-      </div>
-    </div>
-  </div>
-
-
 
 </main>
 </body>
