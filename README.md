@@ -1,1 +1,1 @@
-This website was made with Claude.
+This website was made with Claude and Google AI Studio.
