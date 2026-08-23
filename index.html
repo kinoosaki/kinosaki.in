@@ -16,16 +16,11 @@
     @keyframes fade-up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
     @keyframes float-slow { 0%,100% { transform:translate(0,0) scale(1); } 50% { transform:translate(30px,-20px) scale(1.1); } }
     @keyframes float-slow-2 { 0%,100% { transform:translate(0,0) scale(1); } 50% { transform:translate(-25px,25px) scale(1.15); } }
-    @keyframes pulse-ring { 0% { box-shadow:0 0 0 0 rgba(76,175,80,.55); } 70% { box-shadow:0 0 0 10px rgba(76,175,80,0); } 100% { box-shadow:0 0 0 0 rgba(76,175,80,0); } }
-    @keyframes equalize { 0%,100% { height:20%; } 50% { height:100%; } }
 
     .fade-up { animation: fade-up .55s cubic-bezier(0.2,0,0,1) both; }
     .d2 { animation-delay:.08s } .d3 { animation-delay:.16s } .d4 { animation-delay:.24s } .d5 { animation-delay:.32s }
     .glow-1 { animation: float-slow 14s ease-in-out infinite; }
     .glow-2 { animation: float-slow-2 18s ease-in-out infinite; }
-    .status-ring { animation: pulse-ring 2s infinite; }
-    .bar { animation: equalize 1s ease-in-out infinite; }
-    .bar:nth-child(2){animation-delay:.2s}.bar:nth-child(3){animation-delay:.4s}.bar:nth-child(4){animation-delay:.1s}.bar:nth-child(5){animation-delay:.3s}
     .spring { transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s; }
 
     /* cursor trail */
@@ -63,7 +58,6 @@
           alt="Kinosaki avatar"
           class="h-24 w-24 rounded-full border-2 border-[#503820] bg-[#231508] object-cover"
         />
-        <span class="status-ring absolute bottom-1 right-1 h-5 w-5 rounded-full border-4 border-[#1A1008] bg-[#4CAF50]"></span>
       </div>
       <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-[#F5E4A0]">Kinosaki</h1>
       <p class="mt-1 text-sm text-[#CDB898]">he/him · India · Jan 31</p>
@@ -91,9 +85,6 @@
     <section class="fade-up d3 rounded-2xl border border-[#503820]/80 bg-[#231508]/50 p-5 backdrop-blur-md" aria-labelledby="discord-heading">
       <div class="mb-3 flex items-center justify-between">
         <h2 id="discord-heading" class="text-xs font-semibold uppercase tracking-wider text-[#E8D07A]">Discord</h2>
-        <span class="flex items-center gap-1.5 text-xs font-medium text-[#4CAF50]">
-          <span class="status-ring h-2 w-2 rounded-full bg-[#4CAF50]"></span> Online
-        </span>
       </div>
       <a href="https://discord.com/users/947775206141870111" target="_blank" rel="noopener" class="block">
         <img src="https://discord.c99.nl/widget/theme-3/947775206141870111.png" alt="Discord status for ._.kinosaki" class="block w-full rounded-xl transition hover:opacity-90" />
@@ -104,13 +95,6 @@
     <section class="fade-up d4 rounded-2xl border border-[#503820]/80 bg-[#231508]/50 p-5 backdrop-blur-md" aria-labelledby="music-heading">
       <div class="mb-3 flex items-center justify-between">
         <h2 id="music-heading" class="text-xs font-semibold uppercase tracking-wider text-[#E8D07A]">Now Playing</h2>
-        <div class="flex h-4 items-end gap-0.5" aria-hidden="true">
-          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
-          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
-          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
-          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
-          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
-        </div>
       </div>
       <a href="https://open.spotify.com/user/31y7qiwjuxzkzaxryynn6gmyyhr4" target="_blank" rel="noopener" class="block">
         <img src="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&cover_image=true&theme=natemoo-re&show_offline=true&background_color=121212&interchange=true&profanity=false&hide_remaster=false&bar_color=53b14f&bar_color_cover=true" alt="Spotify now playing" class="block w-full rounded-xl transition hover:opacity-90" />
