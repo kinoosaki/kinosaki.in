@@ -12,7 +12,7 @@
   <style>
     :root {
       --bg: #0F0A06;
-      --surface: rgba(35,21,8,0.5);
+      --surface: rgba(35,21,8,0.55);
       --tile: #2C1C0E;
       --tile-hover: #3A2614;
       --text: #F0E0C8;
@@ -24,15 +24,15 @@
       --chip-a-text: #F5CFC8;
       --chip-b: #4A2018;
       --chip-b-text: #E8C0B0;
-      --glow-core: rgba(232,208,122,0.28);
-      --glow-core-2: rgba(192,136,120,0.18);
-      --glow-1: rgba(92,74,0,0.30);
-      --glow-2: rgba(92,40,32,0.32);
-      --glow-3: rgba(232,168,158,0.16);
+      --glow-core: rgba(232,208,122,0.38);
+      --glow-core-2: rgba(210,130,105,0.26);
+      --glow-1: rgba(130,95,15,0.42);
+      --glow-2: rgba(125,48,38,0.40);
+      --glow-3: rgba(232,168,158,0.24);
     }
     html.light {
       --bg: #F3ECDD;
-      --surface: rgba(255,250,240,0.6);
+      --surface: rgba(255,250,240,0.65);
       --tile: #EDE3D0;
       --tile-hover: #E4D7BE;
       --text: #3B2B14;
@@ -44,28 +44,52 @@
       --chip-a-text: #7A342A;
       --chip-b: #E7D8C0;
       --chip-b-text: #6A4A2C;
-      --glow-core: rgba(232,196,90,0.40);
-      --glow-core-2: rgba(214,150,120,0.28);
-      --glow-1: rgba(232,196,90,0.34);
-      --glow-2: rgba(214,120,100,0.28);
-      --glow-3: rgba(232,168,158,0.30);
+      --glow-core: rgba(232,196,90,0.48);
+      --glow-core-2: rgba(214,150,120,0.34);
+      --glow-1: rgba(232,196,90,0.40);
+      --glow-2: rgba(214,120,100,0.34);
+      --glow-3: rgba(232,168,158,0.36);
     }
 
     body { font-family: 'Roboto Flex', system-ui, sans-serif; cursor: none; background: var(--bg); color: var(--text); transition: background .5s ease, color .5s ease; }
     a, button, [role="button"] { cursor: none; }
 
     @keyframes fade-up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes breathe { 0%,100% { opacity:.75; } 50% { opacity:1; } }
-    @keyframes drift-1 { 0%,100% { transform:translate(-50%,-50%) translate(0,0) scale(1); } 50% { transform:translate(-50%,-50%) translate(-40px,30px) scale(1.15); } }
-    @keyframes drift-2 { 0%,100% { transform:translate(-50%,-50%) translate(0,0) scale(1.1); } 50% { transform:translate(-50%,-50%) translate(45px,-25px) scale(0.95); } }
-    @keyframes drift-3 { 0%,100% { transform:translate(-50%,-50%) translate(0,0) scale(1); } 50% { transform:translate(-50%,-50%) translate(20px,40px) scale(1.2); } }
+    
+    /* Autonomous, organic fluid ambient glow animations */
+    @keyframes core-drift {
+      0% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); opacity: 0.8; }
+      25% { transform: translate(-50%, -50%) translate(70px, -60px) scale(1.15); opacity: 1; }
+      50% { transform: translate(-50%, -50%) translate(-50px, 70px) scale(0.92); opacity: 0.85; }
+      75% { transform: translate(-50%, -50%) translate(-80px, -40px) scale(1.18); opacity: 0.95; }
+      100% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); opacity: 0.8; }
+    }
+    @keyframes drift-1 {
+      0% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(0deg) scale(1); }
+      33% { transform: translate(-50%, -50%) translate(-110px, 80px) rotate(120deg) scale(1.25); }
+      66% { transform: translate(-50%, -50%) translate(80px, -90px) rotate(240deg) scale(0.88); }
+      100% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(360deg) scale(1); }
+    }
+    @keyframes drift-2 {
+      0% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(0deg) scale(1.1); }
+      33% { transform: translate(-50%, -50%) translate(110px, -70px) rotate(-120deg) scale(0.9); }
+      66% { transform: translate(-50%, -50%) translate(-85px, 100px) rotate(-240deg) scale(1.22); }
+      100% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(-360deg) scale(1.1); }
+    }
+    @keyframes drift-3 {
+      0% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); }
+      33% { transform: translate(-50%, -50%) translate(90px, 100px) scale(1.28); }
+      66% { transform: translate(-50%, -50%) translate(-110px, -60px) scale(0.84); }
+      100% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); }
+    }
 
     .fade-up { animation: fade-up .55s cubic-bezier(0.2,0,0,1) both; }
     .d2 { animation-delay:.08s } .d3 { animation-delay:.16s } .d4 { animation-delay:.24s } .d5 { animation-delay:.32s }
-    .core-glow { animation: breathe 8s ease-in-out infinite; }
-    .cloud-1 { animation: drift-1 16s ease-in-out infinite; }
-    .cloud-2 { animation: drift-2 21s ease-in-out infinite; }
-    .cloud-3 { animation: drift-3 26s ease-in-out infinite; }
+    
+    .core-glow { animation: core-drift 14s ease-in-out infinite; will-change: transform, opacity; }
+    .cloud-1 { animation: drift-1 19s ease-in-out infinite; will-change: transform; }
+    .cloud-2 { animation: drift-2 24s ease-in-out infinite; will-change: transform; }
+    .cloud-3 { animation: drift-3 28s ease-in-out infinite; will-change: transform; }
     .spring { transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s; }
 
     /* card surfaces via vars */
@@ -76,27 +100,27 @@
     /* cursor trail */
     .cursor-dot, .cursor-ring, .trail {
       position: fixed; top:0; left:0; border-radius:9999px; pointer-events:none; z-index:9999;
-      transform: translate(-50%,-50%); will-change: transform;
+      transform: translate(-50%,-50%); will-change: transform; opacity: 0; transition: opacity .2s ease;
     }
     .cursor-dot { width:8px; height:8px; background:var(--heading); box-shadow:0 0 12px var(--primary); }
-    .cursor-ring { width:34px; height:34px; border:1.5px solid var(--primary); opacity:.6; transition: width .2s, height .2s, background .2s, border-color .2s; }
-    .cursor-ring.active { width:52px; height:52px; background:color-mix(in srgb, var(--primary) 12%, transparent); opacity:.9; }
+    .cursor-ring { width:34px; height:34px; border:1.5px solid var(--primary); opacity: 0; transition: width .2s, height .2s, background .2s, border-color .2s, opacity .2s; }
+    .cursor-ring.active { width:52px; height:52px; background:color-mix(in srgb, var(--primary) 12%, transparent); opacity:.9 !important; }
     .trail { width:6px; height:6px; }
     @media (hover: none) { body, a, button { cursor:auto; } .cursor-dot,.cursor-ring,.trail { display:none; } }
   </style>
 </head>
-<body class="min-h-screen antialiased">
+<body class="min-h-screen antialiased overflow-x-hidden">
 
-  <!-- Background: cursor-reactive breathing cloud glow -->
+  <!-- Background: autonomously moving dynamic glow clouds -->
   <div class="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
-    <div id="coreGlow" class="core-glow absolute h-[560px] w-[560px] rounded-full"
-         style="left:50%; top:50%; transform:translate(-50%,-50%); background: radial-gradient(circle, var(--glow-core) 0%, var(--glow-core-2) 38%, transparent 68%); filter: blur(70px);"></div>
-    <div id="cloud1" class="cloud-1 absolute left-[38%] top-[42%] h-[380px] w-[380px] rounded-full"
-         style="background: radial-gradient(circle, var(--glow-1) 0%, transparent 66%); filter: blur(80px);"></div>
-    <div id="cloud2" class="cloud-2 absolute left-[60%] top-[55%] h-[420px] w-[420px] rounded-full"
-         style="background: radial-gradient(circle, var(--glow-2) 0%, transparent 66%); filter: blur(85px);"></div>
-    <div id="cloud3" class="cloud-3 absolute left-1/2 top-[38%] h-[300px] w-[300px] rounded-full"
-         style="background: radial-gradient(circle, var(--glow-3) 0%, transparent 64%); filter: blur(75px);"></div>
+    <div id="coreGlow" class="core-glow absolute left-1/2 top-1/2 h-[750px] w-[750px] rounded-full"
+         style="background: radial-gradient(circle, var(--glow-core) 0%, var(--glow-core-2) 42%, transparent 72%); filter: blur(105px);"></div>
+    <div id="cloud1" class="cloud-1 absolute left-[32%] top-[35%] h-[620px] w-[620px] rounded-full"
+         style="background: radial-gradient(circle, var(--glow-1) 0%, transparent 70%); filter: blur(120px);"></div>
+    <div id="cloud2" class="cloud-2 absolute left-[66%] top-[58%] h-[680px] w-[680px] rounded-full"
+         style="background: radial-gradient(circle, var(--glow-2) 0%, transparent 70%); filter: blur(135px);"></div>
+    <div id="cloud3" class="cloud-3 absolute left-[48%] top-[42%] h-[560px] w-[560px] rounded-full"
+         style="background: radial-gradient(circle, var(--glow-3) 0%, transparent 68%); filter: blur(115px);"></div>
   </div>
 
   <!-- Theme toggle -->
@@ -107,7 +131,7 @@
     <svg id="iconSun" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </button>
 
-  <!-- Cursor trail elements -->
+  <!-- Cursor elements -->
   <div class="cursor-ring" id="cursorRing"></div>
   <div class="cursor-dot" id="cursorDot"></div>
 
@@ -116,11 +140,11 @@
     <!-- Profile header -->
     <header class="fade-up flex flex-col items-center text-center">
       <div class="relative">
-        <div class="absolute -inset-3 rounded-full blur-2xl" style="background: color-mix(in srgb, var(--primary) 25%, transparent);" aria-hidden="true"></div>
+        <div class="absolute -inset-4 rounded-full blur-2xl" style="background: color-mix(in srgb, var(--primary) 35%, transparent);" aria-hidden="true"></div>
         <img
           src="https://file.garden/aYCdlBqIC3TWlgqn/9e83f982176b951da1fc39a1568dce75-modified.png"
           alt="Kinosaki avatar"
-          class="relative h-24 w-24 rounded-full border-2 object-cover" style="border-color: var(--border); background: var(--tile);"
+          class="relative h-24 w-24 rounded-full border-2 object-cover shadow-lg" style="border-color: var(--border); background: var(--tile);"
         />
       </div>
       <h1 class="mt-4 text-3xl font-extrabold tracking-tight" style="color: var(--heading); text-shadow: 0 0 34px color-mix(in srgb, var(--primary) 55%, transparent);">Kinosaki</h1>
@@ -128,7 +152,7 @@
     </header>
 
     <!-- Bio + tags card -->
-    <section class="card fade-up d2 rounded-2xl border p-5 backdrop-blur-md" aria-labelledby="about-heading">
+    <section class="card fade-up d2 rounded-2xl border p-5 backdrop-blur-md shadow-lg" aria-labelledby="about-heading">
       <h2 id="about-heading" class="mb-3 text-xs font-semibold uppercase tracking-wider" style="color: var(--primary);">About</h2>
       <p class="text-sm leading-relaxed" style="color: var(--muted);">
         hello! im into music, anime, reading manga, manhwa, light novels, fiction and more! im not much of a gamer and as a sport i play badminton occasionally. my fav genres are action, romance and slice of life!
@@ -146,7 +170,7 @@
     </section>
 
     <!-- Discord status card -->
-    <section class="card fade-up d3 rounded-2xl border p-5 backdrop-blur-md" aria-labelledby="discord-heading">
+    <section class="card fade-up d3 rounded-2xl border p-5 backdrop-blur-md shadow-lg" aria-labelledby="discord-heading">
       <div class="mb-3 flex items-center justify-between">
         <h2 id="discord-heading" class="text-xs font-semibold uppercase tracking-wider" style="color: var(--primary);">Discord</h2>
       </div>
@@ -156,7 +180,7 @@
     </section>
 
     <!-- Music integration card -->
-    <section class="card fade-up d4 rounded-2xl border p-5 backdrop-blur-md" aria-labelledby="music-heading">
+    <section class="card fade-up d4 rounded-2xl border p-5 backdrop-blur-md shadow-lg" aria-labelledby="music-heading">
       <div class="mb-3 flex items-center justify-between">
         <h2 id="music-heading" class="text-xs font-semibold uppercase tracking-wider" style="color: var(--primary);">Now Playing</h2>
       </div>
@@ -166,7 +190,7 @@
     </section>
 
     <!-- Social links card -->
-    <section class="card fade-up d5 rounded-2xl border p-5 backdrop-blur-md" aria-labelledby="social-heading">
+    <section class="card fade-up d5 rounded-2xl border p-5 backdrop-blur-md shadow-lg" aria-labelledby="social-heading">
       <h2 id="social-heading" class="mb-3 text-xs font-semibold uppercase tracking-wider" style="color: var(--primary);">Connect</h2>
       <nav class="grid grid-cols-2 gap-2">
         <a href="https://x.com/kinoosaki" target="_blank" rel="noopener" class="tile spring group flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium ring-1 ring-inset hover:-translate-y-0.5" style="color: var(--chip-b-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">
@@ -206,10 +230,6 @@
 
   </main>
 
-  <!-- Cursor trail elements -->
-  <div class="cursor-ring" id="cursorRing"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
-
   <script>
     (function () {
       /* ---- Theme toggle ---- */
@@ -225,13 +245,12 @@
       applyTheme(theme);
       toggle.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; applyTheme(theme); });
 
-      /* ---- Cursor + dynamic glow ---- */
+      /* ---- Cursor and trails only (glow runs independently) ---- */
       const dot = document.getElementById('cursorDot');
       const ring = document.getElementById('cursorRing');
-      const coreGlow = document.getElementById('coreGlow');
       let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
       let ringX = mouseX, ringY = mouseY;
-      let glowX = mouseX, glowY = mouseY;
+      let hasMoved = false;
 
       const trailColors = ['#F5E4A0', '#E8D07A', '#E8A89E', '#C08878'];
       const trails = [];
@@ -246,6 +265,11 @@
       }
 
       window.addEventListener('mousemove', (e) => {
+        if (!hasMoved) {
+          hasMoved = true;
+          dot.style.opacity = '1';
+          ring.style.opacity = '0.6';
+        }
         mouseX = e.clientX; mouseY = e.clientY;
         dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%,-50%)`;
       });
@@ -256,12 +280,6 @@
         ringY += (mouseY - ringY) * 0.18;
         ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%,-50%)`;
 
-        // core glow follows cursor slowly for dynamic movement
-        glowX += (mouseX - glowX) * 0.045;
-        glowY += (mouseY - glowY) * 0.045;
-        coreGlow.style.left = glowX + 'px';
-        coreGlow.style.top = glowY + 'px';
-
         // trail chain
         let px = mouseX, py = mouseY;
         trails.forEach((t, i) => {
@@ -269,7 +287,7 @@
           t.y += (py - t.y) * 0.35;
           const scale = 1 - i / TRAIL_COUNT;
           t.el.style.transform = `translate(${t.x}px, ${t.y}px) translate(-50%,-50%) scale(${scale})`;
-          t.el.style.opacity = String(scale * 0.5);
+          t.el.style.opacity = hasMoved ? String(scale * 0.45) : '0';
           px = t.x; py = t.y;
         });
         requestAnimationFrame(animate);
