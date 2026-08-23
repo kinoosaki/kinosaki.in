@@ -1,574 +1,215 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-[#1A1008]">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kinosaki</title>
-<link rel="icon" type="image/png" href="https://file.garden/aYCdlBqIC3TWlgqn/9e83f982176b951da1fc39a1568dce75-modified.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght@8..144,25..151,100..900&display=swap" rel="stylesheet" />
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kinosaki</title>
+  <link rel="icon" type="image/png" href="https://file.garden/aYCdlBqIC3TWlgqn/9e83f982176b951da1fc39a1568dce75-modified.png" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..900&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Roboto Flex', system-ui, sans-serif; cursor: none; }
+    a, button, [role="button"] { cursor: none; }
 
-/* ════════════════════════════════════════════
-   M3 Expressive · Android 16 / Pixel dark theme
-   Seed: #C8B66B (golden yellow — avatar hair)
-   Sec:  #DF877F (rose-pink — hair tips)
-   Ter:  #965448 (crimson — eyes)
-   Surf: #342115 (deep warm brown — background)
-   ════════════════════════════════════════════ */
-:root {
-  /* Tonal palette — golden yellow primary */
-  --pri:        #E8D07A;   /* primary — bright gold */
-  --pri-con:    #5C4A00;   /* primary-container */
-  --on-pri-con: #F5E4A0;   /* on-primary-container */
-  --sec:        #E8A89E;   /* secondary — rose pink */
-  --sec-con:    #5C2820;   /* secondary-container */
-  --on-sec-con: #F5CFC8;   /* on-secondary-container */
-  --ter:        #C08878;   /* tertiary — warm crimson */
-  --ter-con:    #4A2018;   /* tertiary-container */
-  --on-ter-con: #E8C0B0;   /* on-tertiary-container */
+    @keyframes fade-up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes float-slow { 0%,100% { transform:translate(0,0) scale(1); } 50% { transform:translate(30px,-20px) scale(1.1); } }
+    @keyframes float-slow-2 { 0%,100% { transform:translate(0,0) scale(1); } 50% { transform:translate(-25px,25px) scale(1.15); } }
+    @keyframes pulse-ring { 0% { box-shadow:0 0 0 0 rgba(76,175,80,.55); } 70% { box-shadow:0 0 0 10px rgba(76,175,80,0); } 100% { box-shadow:0 0 0 0 rgba(76,175,80,0); } }
+    @keyframes equalize { 0%,100% { height:20%; } 50% { height:100%; } }
 
-  /* Surfaces — deep warm brown from avatar background */
-  --bg:          #1A1008;
-  --surf:        #1A1008;
-  --surf-low:    #231508;
-  --surf-con:    #2C1C0E;  /* card surface */
-  --surf-hi:     #382415;  /* elevated card */
-  --surf-top:    #44301E;
+    .fade-up { animation: fade-up .55s cubic-bezier(0.2,0,0,1) both; }
+    .d2 { animation-delay:.08s } .d3 { animation-delay:.16s } .d4 { animation-delay:.24s } .d5 { animation-delay:.32s }
+    .glow-1 { animation: float-slow 14s ease-in-out infinite; }
+    .glow-2 { animation: float-slow-2 18s ease-in-out infinite; }
+    .status-ring { animation: pulse-ring 2s infinite; }
+    .bar { animation: equalize 1s ease-in-out infinite; }
+    .bar:nth-child(2){animation-delay:.2s}.bar:nth-child(3){animation-delay:.4s}.bar:nth-child(4){animation-delay:.1s}.bar:nth-child(5){animation-delay:.3s}
+    .spring { transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s; }
 
-  --on-surf:     #F0E0C8;
-  --on-surf-var: #CDB898;
-  --outline:     #9A8068;
-  --outline-var: #503820;
-
-  /* Shape — M3 Expressive uses "morphed" shapes, very round */
-  --r-xs:   6px;
-  --r-sm:   12px;
-  --r-md:   16px;
-  --r-lg:   24px;
-  --r-xl:   28px;
-  --r-2xl:  36px;
-  --r-pill: 9999px;
-
-  /* M3 Expressive spring */
-  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --std:    cubic-bezier(0.2, 0, 0, 1);
-  --emph:   cubic-bezier(0.05, 0.7, 0.1, 1);
-}
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--bg);
-  color: var(--on-surf);
-  font-family: 'Roboto Flex', system-ui, sans-serif;
-  font-variation-settings: 'wght' 400, 'wdth' 100, 'opsz' 14;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-}
-
-.page {
-  max-width: 760px;
-  margin: 0 auto;
-  padding: 40px 18px 80px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-}
-
-/* ══════════════════════════════════════
-   LOCKSCREEN-STYLE HERO
-   Pixel 9 lock screen: huge pill clock,
-   identity info below
-   ══════════════════════════════════════ */
-.hero {
-  animation: fade-up .5s var(--std) both;
-}
-
-/* The big Pixel clock pill — Android 16 lock screen */
-.clock-pill {
-  background: var(--pri-con);
-  border-radius: var(--r-2xl);
-  padding: 20px 32px 22px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-  overflow: hidden;
-}
-
-/* Tonal shimmer — Pixel uses a subtle gradient on lock screen surfaces */
-.clock-pill::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.07) 0%, transparent 55%);
-  pointer-events: none;
-}
-
-.avatar {
-  width: 72px;
-  height: 72px;
-  border-radius: var(--r-pill);
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 2.5px solid rgba(255,255,255,0.18);
-  position: relative;
-  z-index: 1;
-}
-
-.hero-name-block {
-  position: relative;
-  z-index: 1;
-}
-
-/* Display Large — Pixel lock screen name, thick & wide */
-.hero-name {
-  font-variation-settings: 'wght' 800, 'wdth' 115, 'opsz' 40;
-  font-size: clamp(2.6rem, 10vw, 4rem);
-  line-height: 0.95;
-  letter-spacing: -0.025em;
-  color: var(--on-pri-con);
-  margin-bottom: 8px;
-}
-
-.hero-sub {
-  font-variation-settings: 'wght' 450, 'wdth' 100, 'opsz' 14;
-  font-size: 13px;
-  color: color-mix(in srgb, var(--on-pri-con) 70%, transparent);
-  letter-spacing: 0.01em;
-}
-
-/* Assist chips — pill shaped, M3 Expressive */
-.chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.chip {
-  font-variation-settings: 'wght' 500, 'wdth' 100, 'opsz' 11;
-  font-size: 12.5px;
-  color: var(--on-sec-con);
-  background: var(--sec-con);
-  border-radius: var(--r-pill);
-  padding: 7px 16px;
-  border: none;
-  cursor: default;
-  transition: transform .35s var(--spring), box-shadow .2s var(--std);
-}
-.chip:hover {
-  transform: scale(1.08) translateY(-1px);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
-}
-
-/* Bio — Body Large */
-.bio {
-  font-variation-settings: 'wght' 350, 'wdth' 100, 'opsz' 14;
-  font-size: 14.5px;
-  line-height: 1.65;
-  color: var(--on-surf-var);
-  padding-top: 4px;
-}
-
-/* ══════════════════════════════════════
-   SECTION LABEL
-   ══════════════════════════════════════ */
-.sec-label {
-  font-variation-settings: 'wght' 650, 'wdth' 100, 'opsz' 11;
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--pri);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.sec-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--outline-var);
-}
-
-.panel {
-  animation: fade-up .45s var(--std) both;
-}
-.panel:nth-child(2) { animation-delay: .06s; }
-.panel:nth-child(3) { animation-delay: .12s; }
-.panel:nth-child(4) { animation-delay: .18s; }
-.panel:nth-child(5) { animation-delay: .24s; }
-.panel:nth-child(6) { animation-delay: .30s; }
-
-/* ══════════════════════════════════════
-   INTERESTS — Filter chips, M3
-   ══════════════════════════════════════ */
-.interests {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.pill {
-  font-variation-settings: 'wght' 500, 'wdth' 100, 'opsz' 13;
-  font-size: 13.5px;
-  color: var(--on-ter-con);
-  background: var(--ter-con);
-  border-radius: var(--r-pill);
-  padding: 9px 20px;
-  cursor: default;
-  transition: transform .4s var(--spring), box-shadow .2s;
-}
-.pill:hover {
-  transform: scale(1.1) translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
-}
-
-/* ══════════════════════════════════════
-   QUICK SETTINGS GRID
-   Pixel 9 / Android 16: 2-column tiles,
-   very round, tonal, icon + label layout
-   ══════════════════════════════════════ */
-.qs-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.qs-tile {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  background: var(--surf-con);
-  border-radius: var(--r-xl);
-  padding: 18px 18px 16px;
-  text-decoration: none;
-  color: var(--on-surf);
-  min-height: 96px;
-  position: relative;
-  overflow: hidden;
-  transition:
-    transform .4s var(--spring),
-    background .2s var(--std),
-    box-shadow .2s;
-  border: 1px solid transparent;
-}
-
-/* State layer — M3 hover 8% */
-.qs-tile::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--pri);
-  opacity: 0;
-  border-radius: inherit;
-  transition: opacity .15s;
-  pointer-events: none;
-}
-.qs-tile:hover::after { opacity: 0.08; }
-.qs-tile:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.45);
-  border-color: var(--outline-var);
-}
-
-/* Icon container — Pixel uses a tonal container for QS icons */
-.qs-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--r-pill);
-  background: var(--pri-con);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: transform .4s var(--spring);
-}
-.qs-tile:hover .qs-icon {
-  transform: rotate(-8deg) scale(1.12);
-}
-.qs-icon svg {
-  width: 20px;
-  height: 20px;
-  fill: var(--on-pri-con);
-}
-
-.qs-info {}
-.qs-name {
-  font-variation-settings: 'wght' 600, 'wdth' 100, 'opsz' 13;
-  font-size: 13.5px;
-  color: var(--on-surf);
-  line-height: 1.2;
-}
-.qs-sub {
-  font-variation-settings: 'wght' 400, 'wdth' 100, 'opsz' 11;
-  font-size: 11.5px;
-  color: var(--on-surf-var);
-  margin-top: 2px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* ══════════════════════════════════════
-   WIDGET CARDS GRID
-   ══════════════════════════════════════ */
-.widget-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.wcard {
-  background: var(--surf-low);
-  border-radius: var(--r-2xl);
-  overflow: hidden;
-  border: 1px solid var(--outline-var);
-  display: flex;
-  flex-direction: column;
-}
-
-.wcard-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px 10px;
-}
-
-/* Pixel: label inside a small pill on the widget header */
-.wcard-pill {
-  font-variation-settings: 'wght' 600, 'wdth' 100, 'opsz' 11;
-  font-size: 10.5px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  background: var(--surf-top);
-  color: var(--on-surf-var);
-  border-radius: var(--r-pill);
-  padding: 5px 12px;
-  white-space: nowrap;
-}
-
-.live-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #4CAF50;
-  box-shadow: 0 0 8px #4CAF50bb;
-  animation: dot-pulse 2s ease-in-out infinite;
-  flex-shrink: 0;
-}
-.live-dot.idle {
-  background: var(--outline);
-  box-shadow: none;
-  animation: none;
-}
-@keyframes dot-pulse {
-  0%,100% { opacity:1; transform:scale(1); }
-  50%      { opacity:.4; transform:scale(.75); }
-}
-
-.wcard-body {
-  padding: 0 12px 12px;
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
-.wcard-body a {
-  width: 100%;
-  display: block;
-}
-.wcard-body img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: var(--r-md);
-}
-.wcard-body a img { transition: opacity .2s, transform .35s var(--spring); }
-.wcard-body a:hover img { opacity:.88; transform:scale(1.015); }
-
-/* ══════════════════════════════════════
-   FOOTER — Pixel FAB style
-   ══════════════════════════════════════ */
-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 8px;
-  animation: fade-up .45s var(--std) .4s both;
-}
-
-/* Extended FAB — M3 Expressive */
-.footer-fab {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background: var(--pri-con);
-  color: var(--on-pri-con);
-  border-radius: var(--r-pill);
-  padding: 12px 24px;
-  font-variation-settings: 'wght' 600, 'wdth' 100, 'opsz' 13;
-  font-size: 13px;
-  letter-spacing: 0.02em;
-  cursor: default;
-  transition: transform .4s var(--spring), box-shadow .2s;
-}
-.footer-fab:hover {
-  transform: scale(1.04) translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-}
-.footer-fab-icon {
-  font-size: 16px;
-}
-
-/* Three tonal dots */
-.dot-trio {
-  display: flex;
-  gap: 7px;
-}
-.dot-trio span {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  animation: trio-bounce 2s ease-in-out infinite;
-}
-.dot-trio span:nth-child(1) { background: var(--pri); }
-.dot-trio span:nth-child(2) { background: var(--ter); animation-delay: .22s; }
-.dot-trio span:nth-child(3) { background: var(--sec); animation-delay: .44s; }
-@keyframes trio-bounce {
-  0%,100% { transform:translateY(0); opacity:.45; }
-  50%     { transform:translateY(-6px); opacity:1; }
-}
-
-@keyframes fade-up {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 480px) {
-  .clock-pill { flex-direction: column; align-items: flex-start; gap: 14px; }
-  .hero-name { font-size: 2.6rem; }
-  .qs-grid, .widget-grid { grid-template-columns: 1fr 1fr; }
-  .page { padding: 28px 14px 60px; gap: 22px; }
-}
-</style>
+    /* cursor trail */
+    .cursor-dot, .cursor-ring, .trail {
+      position: fixed; top:0; left:0; border-radius:9999px; pointer-events:none; z-index:9999;
+      transform: translate(-50%,-50%); will-change: transform;
+    }
+    .cursor-dot { width:8px; height:8px; background:#F5E4A0; box-shadow:0 0 12px #E8D07A; }
+    .cursor-ring { width:34px; height:34px; border:1.5px solid rgba(232,208,122,.55); transition: width .2s, height .2s, background .2s, border-color .2s; }
+    .cursor-ring.active { width:52px; height:52px; background:rgba(232,208,122,.1); border-color:rgba(232,208,122,.85); }
+    .trail { width:6px; height:6px; }
+    @media (hover: none) { body, a, button { cursor:auto; } .cursor-dot,.cursor-ring,.trail { display:none; } }
+  </style>
 </head>
-<body>
-<main class="page">
+<body class="min-h-screen bg-[#1A1008] text-[#F0E0C8] antialiased selection:bg-[#E8D07A]/25">
 
-  <!-- HERO — Pixel lock screen pill -->
-  <div class="hero panel">
-    <div class="clock-pill">
-      <img class="avatar" src="https://file.garden/aYCdlBqIC3TWlgqn/9e83f982176b951da1fc39a1568dce75-modified.png" alt="Kinosaki" />
-      <div class="hero-name-block">
-        <div class="hero-name">Kinosaki</div>
-      </div>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:12px;">
-      <div class="chip-row">
-        <span class="chip">12th Grade</span>
-        <span class="chip">17 yrs</span>
-        <span class="chip">PCM</span>
-        <span class="chip">Jan 31</span>
-        <span class="chip">he/him</span>
-        <span class="chip">India</span>
-      </div>
-      <p class="bio">hello! im into music, anime, reading manga, manhwa, light novels, fiction and more! im not much of a gamer and as a sport i play badminton occasionally. my fav genres are action, romance and slice of life!</p>
-    </div>
+  <!-- Ambient animated background glow -->
+  <div class="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
+    <div class="glow-1 absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-[#5C4A00]/40 blur-[130px]"></div>
+    <div class="glow-2 absolute bottom-0 right-0 h-80 w-80 rounded-full bg-[#5C2820]/40 blur-[130px]"></div>
+    <div class="glow-1 absolute bottom-1/4 left-0 h-72 w-72 rounded-full bg-[#E8A89E]/10 blur-[130px]"></div>
   </div>
 
-  <!-- INTERESTS -->
-  <div class="panel">
-    <div class="sec-label">Interests</div>
-    <div class="interests">
-      <span class="pill">Music</span>
-      <span class="pill">Animanga</span>
-      <span class="pill">Tech</span>
-      <span class="pill">Gaming</span>
-      <span class="pill">Badminton</span>
-    </div>
-  </div>
+  <!-- Cursor trail elements -->
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="cursor-dot" id="cursorDot"></div>
 
-  <!-- SIDE-BY-SIDE WIDGETS -->
-  <div class="panel">
-    <div class="widget-grid">
+  <main class="relative mx-auto flex min-h-screen max-w-md flex-col gap-4 px-4 py-10">
 
-      <!-- DISCORD STATUS -->
-      <div class="wcard">
-        <div class="wcard-head">
-          <span class="wcard-pill">Discord</span>
-          <div class="live-dot"></div>
-        </div>
-        <div class="wcard-body">
-          <a href="https://discord.com/users/947775206141870111" target="_blank" rel="noopener">
-            <img src="https://discord.c99.nl/widget/theme-3/947775206141870111.png" alt="Discord Status" />
-          </a>
+    <!-- Profile header -->
+    <header class="fade-up flex flex-col items-center text-center">
+      <div class="relative">
+        <img
+          src="https://file.garden/aYCdlBqIC3TWlgqn/9e83f982176b951da1fc39a1568dce75-modified.png"
+          alt="Kinosaki avatar"
+          class="h-24 w-24 rounded-full border-2 border-[#503820] bg-[#231508] object-cover"
+        />
+        <span class="status-ring absolute bottom-1 right-1 h-5 w-5 rounded-full border-4 border-[#1A1008] bg-[#4CAF50]"></span>
+      </div>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-[#F5E4A0]">Kinosaki</h1>
+      <p class="mt-1 text-sm text-[#CDB898]">he/him · India · Jan 31</p>
+    </header>
+
+    <!-- Bio + tags card -->
+    <section class="fade-up d2 rounded-2xl border border-[#503820]/80 bg-[#231508]/50 p-5 backdrop-blur-md" aria-labelledby="about-heading">
+      <h2 id="about-heading" class="mb-3 text-xs font-semibold uppercase tracking-wider text-[#E8D07A]">About</h2>
+      <p class="text-sm leading-relaxed text-[#CDB898]">
+        hello! im into music, anime, reading manga, manhwa, light novels, fiction and more! im not much of a gamer and as a sport i play badminton occasionally. my fav genres are action, romance and slice of life!
+      </p>
+      <ul class="mt-4 flex flex-wrap gap-2">
+        <li class="rounded-full bg-[#5C2820] px-3 py-1 text-xs font-medium text-[#F5CFC8]">12th Grade</li>
+        <li class="rounded-full bg-[#5C2820] px-3 py-1 text-xs font-medium text-[#F5CFC8]">17 yrs</li>
+        <li class="rounded-full bg-[#5C2820] px-3 py-1 text-xs font-medium text-[#F5CFC8]">PCM</li>
+        <li class="rounded-full bg-[#4A2018] px-3 py-1 text-xs font-medium text-[#E8C0B0]">Music</li>
+        <li class="rounded-full bg-[#4A2018] px-3 py-1 text-xs font-medium text-[#E8C0B0]">Animanga</li>
+        <li class="rounded-full bg-[#4A2018] px-3 py-1 text-xs font-medium text-[#E8C0B0]">Tech</li>
+        <li class="rounded-full bg-[#4A2018] px-3 py-1 text-xs font-medium text-[#E8C0B0]">Gaming</li>
+        <li class="rounded-full bg-[#4A2018] px-3 py-1 text-xs font-medium text-[#E8C0B0]">Badminton</li>
+      </ul>
+    </section>
+
+    <!-- Discord status card -->
+    <section class="fade-up d3 rounded-2xl border border-[#503820]/80 bg-[#231508]/50 p-5 backdrop-blur-md" aria-labelledby="discord-heading">
+      <div class="mb-3 flex items-center justify-between">
+        <h2 id="discord-heading" class="text-xs font-semibold uppercase tracking-wider text-[#E8D07A]">Discord</h2>
+        <span class="flex items-center gap-1.5 text-xs font-medium text-[#4CAF50]">
+          <span class="status-ring h-2 w-2 rounded-full bg-[#4CAF50]"></span> Online
+        </span>
+      </div>
+      <a href="https://discord.com/users/947775206141870111" target="_blank" rel="noopener" class="block">
+        <img src="https://discord.c99.nl/widget/theme-3/947775206141870111.png" alt="Discord status for ._.kinosaki" class="block w-full rounded-xl transition hover:opacity-90" />
+      </a>
+    </section>
+
+    <!-- Music integration card -->
+    <section class="fade-up d4 rounded-2xl border border-[#503820]/80 bg-[#231508]/50 p-5 backdrop-blur-md" aria-labelledby="music-heading">
+      <div class="mb-3 flex items-center justify-between">
+        <h2 id="music-heading" class="text-xs font-semibold uppercase tracking-wider text-[#E8D07A]">Now Playing</h2>
+        <div class="flex h-4 items-end gap-0.5" aria-hidden="true">
+          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
+          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
+          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
+          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
+          <span class="bar w-0.5 rounded-full bg-[#E8D07A]"></span>
         </div>
       </div>
-
-      <!-- NOW PLAYING -->
-      <div class="wcard">
-        <div class="wcard-head">
-          <span class="wcard-pill">Now Playing</span>
-          <div class="live-dot"></div>
-        </div>
-        <div class="wcard-body">
-          <a href="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&redirect=true" target="_blank" rel="noopener">
-            <img src="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&cover_image=true&theme=natemoo-re&show_offline=true&background_color=121212&interchange=true&profanity=false&hide_remaster=false&bar_color=53b14f&bar_color_cover=true" alt="Spotify Now Playing" />
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- CONNECT — Quick settings tiles -->
-  <div class="panel">
-    <div class="sec-label">Connect</div>
-    <div class="qs-grid">
-
-      <a class="qs-tile" href="https://x.com/kinoosaki" target="_blank" rel="noopener">
-        <div class="qs-icon"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.23H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
-        <div class="qs-info"><div class="qs-name">Twitter</div><div class="qs-sub">@kinoosaki</div></div>
+      <a href="https://open.spotify.com/user/31y7qiwjuxzkzaxryynn6gmyyhr4" target="_blank" rel="noopener" class="block">
+        <img src="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&cover_image=true&theme=natemoo-re&show_offline=true&background_color=121212&interchange=true&profanity=false&hide_remaster=false&bar_color=53b14f&bar_color_cover=true" alt="Spotify now playing" class="block w-full rounded-xl transition hover:opacity-90" />
       </a>
+    </section>
 
-      <a class="qs-tile" href="https://discord.com/users/947775206141870111" target="_blank" rel="noopener">
-        <div class="qs-icon"><svg viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 22.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg></div>
-        <div class="qs-info"><div class="qs-name">Discord</div><div class="qs-sub">._.kinosaki</div></div>
-      </a>
+    <!-- Social links card -->
+    <section class="fade-up d5 rounded-2xl border border-[#503820]/80 bg-[#231508]/50 p-5 backdrop-blur-md" aria-labelledby="social-heading">
+      <h2 id="social-heading" class="mb-3 text-xs font-semibold uppercase tracking-wider text-[#E8D07A]">Connect</h2>
+      <nav class="grid grid-cols-2 gap-2">
+        <a href="https://x.com/kinoosaki" target="_blank" rel="noopener" class="spring group flex items-center gap-2.5 rounded-xl bg-[#2C1C0E] px-3 py-2.5 text-sm font-medium text-[#E8C0B0] ring-1 ring-inset ring-[#503820]/60 hover:-translate-y-0.5 hover:bg-[#3A2614] hover:text-[#F0E0C8]">
+          <svg class="h-4 w-4 fill-[#E8D07A]" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.23H2.744l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          Twitter
+        </a>
+        <a href="https://discord.com/users/947775206141870111" target="_blank" rel="noopener" class="spring group flex items-center gap-2.5 rounded-xl bg-[#2C1C0E] px-3 py-2.5 text-sm font-medium text-[#E8C0B0] ring-1 ring-inset ring-[#503820]/60 hover:-translate-y-0.5 hover:bg-[#3A2614] hover:text-[#F0E0C8]">
+          <svg class="h-4 w-4 fill-[#E8D07A]" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+          Discord
+        </a>
+        <a href="https://github.com/kinoosaki" target="_blank" rel="noopener" class="spring group flex items-center gap-2.5 rounded-xl bg-[#2C1C0E] px-3 py-2.5 text-sm font-medium text-[#E8C0B0] ring-1 ring-inset ring-[#503820]/60 hover:-translate-y-0.5 hover:bg-[#3A2614] hover:text-[#F0E0C8]">
+          <svg class="h-4 w-4 fill-[#E8D07A]" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          GitHub
+        </a>
+        <a href="https://www.reddit.com/user/icedchocolatecake/" target="_blank" rel="noopener" class="spring group flex items-center gap-2.5 rounded-xl bg-[#2C1C0E] px-3 py-2.5 text-sm font-medium text-[#E8C0B0] ring-1 ring-inset ring-[#503820]/60 hover:-translate-y-0.5 hover:bg-[#3A2614] hover:text-[#F0E0C8]">
+          <svg class="h-4 w-4 fill-[#E8D07A]" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          Reddit
+        </a>
+        <a href="https://open.spotify.com/user/31y7qiwjuxzkzaxryynn6gmyyhr4" target="_blank" rel="noopener" class="spring group flex items-center gap-2.5 rounded-xl bg-[#2C1C0E] px-3 py-2.5 text-sm font-medium text-[#E8C0B0] ring-1 ring-inset ring-[#503820]/60 hover:-translate-y-0.5 hover:bg-[#3A2614] hover:text-[#F0E0C8]">
+          <svg class="h-4 w-4 fill-[#E8D07A]" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+          Spotify
+        </a>
+        <a href="https://www.last.fm/user/itsyuriko" target="_blank" rel="noopener" class="spring group flex items-center gap-2.5 rounded-xl bg-[#2C1C0E] px-3 py-2.5 text-sm font-medium text-[#E8C0B0] ring-1 ring-inset ring-[#503820]/60 hover:-translate-y-0.5 hover:bg-[#3A2614] hover:text-[#F0E0C8]">
+          <svg class="h-4 w-4 fill-[#E8D07A]" viewBox="0 0 24 24"><path d="M10.584 17.209l-.88-2.392s-1.43 1.596-3.573 1.596c-1.897 0-3.244-1.65-3.244-4.289 0-3.381 1.704-4.59 3.381-4.59 2.419 0 3.188 1.567 3.849 3.574l.88 2.75c.88 2.669 2.529 4.811 7.283 4.811 3.409 0 5.719-1.044 5.719-3.793 0-2.226-1.265-3.381-3.629-3.931l-1.757-.385c-1.21-.275-1.568-.77-1.568-1.594 0-.935.742-1.484 1.952-1.484 1.32 0 2.034.495 2.144 1.677l2.749-.33c-.22-2.474-1.926-3.491-4.729-3.491-2.474 0-4.894.935-4.894 3.931 0 1.869.908 3.051 3.188 3.601l1.869.44c1.374.33 1.869.908 1.869 1.703 0 1.016-.989 1.43-2.859 1.43-2.772 0-3.929-1.457-4.591-3.465l-.902-2.75C11.854 7.717 10.088 6 6.137 6 2.252 6 0 8.474 0 12.179c0 3.574 1.814 6.236 5.967 6.236 3.079.001 4.617-1.206 4.617-1.206z"/></svg>
+          Last.fm
+        </a>
+        <a href="https://anilist.co/user/Kinosaki/" target="_blank" rel="noopener" class="spring group flex items-center gap-2.5 rounded-xl bg-[#2C1C0E] px-3 py-2.5 text-sm font-medium text-[#E8C0B0] ring-1 ring-inset ring-[#503820]/60 hover:-translate-y-0.5 hover:bg-[#3A2614] hover:text-[#F0E0C8]">
+          <svg class="h-4 w-4 fill-[#E8D07A]" viewBox="0 0 24 24"><path d="M6.361 2.943 0 21.056h4.942l1.077-3.133H11.4l1.052 3.133H22.9c.71 0 1.1-.392 1.1-1.101V17.53c0-.71-.39-1.1-1.1-1.1h-6.483V4.045c0-.71-.392-1.102-1.101-1.102h-3.532c-.71 0-1.1.392-1.1 1.102v1.25L8.967 2.943c-.252-.755-.971-1.102-1.75-.919-.78.182-1.078.807-1.078.807l.222.112Zm1.513 5.516 1.789 5.26H6.087l1.787-5.26Z"/></svg>
+          AniList
+        </a>
+        <a href="https://t.me/kinoosakii" target="_blank" rel="noopener" class="spring group flex items-center gap-2.5 rounded-xl bg-[#2C1C0E] px-3 py-2.5 text-sm font-medium text-[#E8C0B0] ring-1 ring-inset ring-[#503820]/60 hover:-translate-y-0.5 hover:bg-[#3A2614] hover:text-[#F0E0C8]">
+          <svg class="h-4 w-4 fill-[#E8D07A]" viewBox="0 0 24 24"><path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.36-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"/></svg>
+          Telegram
+        </a>
+      </nav>
+    </section>
 
-      <a class="qs-tile" href="https://github.com/kinoosaki" target="_blank" rel="noopener">
-        <div class="qs-icon"><svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></div>
-        <div class="qs-info"><div class="qs-name">GitHub</div><div class="qs-sub">kinoosaki</div></div>
-      </a>
+  </main>
 
-      <a class="qs-tile" href="https://www.reddit.com/user/icedchocolatecake/" target="_blank" rel="noopener">
-        <div class="qs-icon"><svg viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg></div>
-        <div class="qs-info"><div class="qs-name">Reddit</div><div class="qs-sub">icedchocolatecake</div></div>
-      </a>
+  <script>
+    (function () {
+      const dot = document.getElementById('cursorDot');
+      const ring = document.getElementById('cursorRing');
+      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+      let ringX = mouseX, ringY = mouseY;
 
-      <a class="qs-tile" href="https://open.spotify.com/user/31y7qiwjuxzkzaxryynn6gmyyhr4" target="_blank" rel="noopener">
-        <div class="qs-icon"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg></div>
-        <div class="qs-info"><div class="qs-name">Spotify</div><div class="qs-sub">Kinosaki</div></div>
-      </a>
+      // Trailing particle pool
+      const trailColors = ['#F5E4A0', '#E8D07A', '#E8A89E', '#C08878'];
+      const trails = [];
+      const TRAIL_COUNT = 14;
+      for (let i = 0; i < TRAIL_COUNT; i++) {
+        const t = document.createElement('div');
+        t.className = 'trail';
+        t.style.background = trailColors[i % trailColors.length];
+        t.style.opacity = '0';
+        document.body.appendChild(t);
+        trails.push({ el: t, x: mouseX, y: mouseY });
+      }
 
-      <a class="qs-tile" href="https://www.last.fm/user/itsyuriko" target="_blank" rel="noopener">
-        <div class="qs-icon"><svg viewBox="0 0 24 24"><path d="M10.584 17.209l-.88-2.392s-1.43 1.596-3.573 1.596c-1.897 0-3.244-1.65-3.244-4.289 0-3.381 1.704-4.59 3.381-4.59 2.419 0 3.188 1.567 3.849 3.574l.88 2.75c.88 2.669 2.529 4.811 7.283 4.811 3.409 0 5.719-1.044 5.719-3.793 0-2.226-1.265-3.381-3.629-3.931l-1.757-.385c-1.21-.275-1.568-.77-1.568-1.594 0-.935.742-1.484 1.952-1.484 1.32 0 2.034.495 2.144 1.677l2.749-.33c-.22-2.474-1.926-3.491-4.729-3.491-2.474 0-4.894.935-4.894 3.931 0 1.869.908 3.051 3.188 3.601l1.869.44c1.374.33 1.869.908 1.869 1.703 0 1.016-.989 1.43-2.859 1.43-2.772 0-3.929-1.457-4.591-3.465l-.902-2.75C11.854 7.717 10.088 6 6.137 6 2.252 6 0 8.474 0 12.179c0 3.574 1.814 6.236 5.967 6.236 3.079.001 4.617-1.206 4.617-1.206z"/></svg></div>
-        <div class="qs-info"><div class="qs-name">Last.fm</div><div class="qs-sub">itsyuriko</div></div>
-      </a>
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX; mouseY = e.clientY;
+        dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%,-50%)`;
+      });
 
-      <a class="qs-tile" href="https://anilist.co/user/Kinosaki/" target="_blank" rel="noopener">
-        <div class="qs-icon"><svg viewBox="0 0 24 24"><path d="M6.361 2.943 0 21.056h4.942l1.077-3.133H11.4l1.052 3.133H22.9c.71 0 1.1-.392 1.1-1.101V17.53c0-.71-.39-1.1-1.1-1.1h-6.483V4.045c0-.71-.392-1.102-1.101-1.102h-3.532c-.71 0-1.1.392-1.1 1.102v1.25L8.967 2.943c-.252-.755-.971-1.102-1.75-.919-.78.182-1.078.807-1.078.807l.222.112Zm1.513 5.516 1.789 5.26H6.087l1.787-5.26Z"/></svg></div>
-        <div class="qs-info"><div class="qs-name">AniList</div><div class="qs-sub">Kinosaki</div></div>
-      </a>
+      function animate() {
+        // ring easing follow
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%,-50%)`;
 
-    </div>
-  </div>
+        // trail chain follow
+        let px = mouseX, py = mouseY;
+        trails.forEach((t, i) => {
+          t.x += (px - t.x) * 0.35;
+          t.y += (py - t.y) * 0.35;
+          const scale = 1 - i / TRAIL_COUNT;
+          t.el.style.transform = `translate(${t.x}px, ${t.y}px) translate(-50%,-50%) scale(${scale})`;
+          t.el.style.opacity = String(scale * 0.5);
+          px = t.x; py = t.y;
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
 
-</main>
+      // Hover enlarge on interactive elements
+      document.querySelectorAll('a, button').forEach((el) => {
+        el.addEventListener('mouseenter', () => ring.classList.add('active'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('active'));
+      });
+    })();
+  </script>
+
 </body>
 </html>
