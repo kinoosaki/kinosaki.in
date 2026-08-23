@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-[#1A1008]">
+<html lang="en" class="bg-[#0F0A06]">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,22 +15,22 @@
 
     @keyframes fade-up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 
-    /* neppu-style central breathing glow */
+    /* neppu-style soft central cloud glow — breathes gently */
     @keyframes breathe {
-      0%,100% { opacity:.55; transform:translate(-50%,-50%) scale(1); }
-      50%     { opacity:.9;  transform:translate(-50%,-50%) scale(1.12); }
+      0%,100% { opacity:.75; transform:translate(-50%,-50%) scale(1); }
+      50%     { opacity:1;   transform:translate(-50%,-50%) scale(1.08); }
     }
-    /* slow drifting waves */
-    @keyframes wave-x { 0% { transform:translateX(-25%); } 100% { transform:translateX(0%); } }
-    @keyframes wave-x-rev { 0% { transform:translateX(0%); } 100% { transform:translateX(-25%); } }
-    @keyframes sway { 0%,100% { transform:translateY(0) scaleY(1); } 50% { transform:translateY(-14px) scaleY(1.06); } }
+    /* slow organic drift for the soft satellite clouds (the "wavy" motion) */
+    @keyframes drift-1 { 0%,100% { transform:translate(-50%,-50%) translate(0,0) scale(1); } 50% { transform:translate(-50%,-50%) translate(-40px,30px) scale(1.15); } }
+    @keyframes drift-2 { 0%,100% { transform:translate(-50%,-50%) translate(0,0) scale(1.1); } 50% { transform:translate(-50%,-50%) translate(45px,-25px) scale(0.95); } }
+    @keyframes drift-3 { 0%,100% { transform:translate(-50%,-50%) translate(0,0) scale(1); } 50% { transform:translate(-50%,-50%) translate(20px,40px) scale(1.2); } }
 
     .fade-up { animation: fade-up .55s cubic-bezier(0.2,0,0,1) both; }
     .d2 { animation-delay:.08s } .d3 { animation-delay:.16s } .d4 { animation-delay:.24s } .d5 { animation-delay:.32s }
-    .core-glow { animation: breathe 7s ease-in-out infinite; }
-    .wave-a { animation: wave-x 18s linear infinite alternate, sway 9s ease-in-out infinite; }
-    .wave-b { animation: wave-x-rev 24s linear infinite alternate, sway 11s ease-in-out infinite; }
-    .wave-c { animation: wave-x 30s linear infinite alternate, sway 13s ease-in-out infinite; }
+    .core-glow { animation: breathe 8s ease-in-out infinite; }
+    .cloud-1 { animation: drift-1 16s ease-in-out infinite; }
+    .cloud-2 { animation: drift-2 21s ease-in-out infinite; }
+    .cloud-3 { animation: drift-3 26s ease-in-out infinite; }
     .spring { transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s; }
 
     /* cursor trail */
@@ -45,24 +45,20 @@
     @media (hover: none) { body, a, button { cursor:auto; } .cursor-dot,.cursor-ring,.trail { display:none; } }
   </style>
 </head>
-<body class="min-h-screen bg-[#150C05] text-[#F0E0C8] antialiased selection:bg-[#E8D07A]/25">
+<body class="min-h-screen bg-[#0F0A06] text-[#F0E0C8] antialiased selection:bg-[#E8D07A]/25">
 
-  <!-- Background: neppu-style core glow + drifting waves -->
+  <!-- Background: soft breathing cloud glow like neppu.moe -->
   <div class="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
-    <!-- large soft breathing core glow -->
-    <div class="core-glow absolute left-1/2 top-[38%] h-[620px] w-[620px] rounded-full"
-         style="background: radial-gradient(circle, rgba(232,208,122,0.22) 0%, rgba(192,136,120,0.16) 35%, rgba(92,40,32,0.10) 55%, transparent 72%); filter: blur(40px);"></div>
-
-    <!-- wavy layers anchored to the bottom -->
-    <svg class="wave-c absolute bottom-0 left-0 h-[46vh] w-[150%]" viewBox="0 0 1440 320" preserveAspectRatio="none" fill="none">
-      <path d="M0 200 C 240 120 480 280 720 200 C 960 120 1200 260 1440 190 L1440 320 L0 320 Z" fill="#5C4A00" fill-opacity="0.16"/>
-    </svg>
-    <svg class="wave-b absolute bottom-0 left-0 h-[38vh] w-[150%]" viewBox="0 0 1440 320" preserveAspectRatio="none" fill="none">
-      <path d="M0 240 C 300 160 520 300 780 230 C 1040 160 1220 280 1440 220 L1440 320 L0 320 Z" fill="#5C2820" fill-opacity="0.20"/>
-    </svg>
-    <svg class="wave-a absolute bottom-0 left-0 h-[30vh] w-[150%]" viewBox="0 0 1440 320" preserveAspectRatio="none" fill="none">
-      <path d="M0 260 C 260 210 460 300 720 260 C 980 220 1200 300 1440 255 L1440 320 L0 320 Z" fill="#E8A89E" fill-opacity="0.10"/>
-    </svg>
+    <!-- big soft central cloud -->
+    <div class="core-glow absolute left-1/2 top-1/2 h-[560px] w-[560px] rounded-full"
+         style="background: radial-gradient(circle, rgba(232,208,122,0.28) 0%, rgba(192,136,120,0.18) 38%, transparent 68%); filter: blur(70px);"></div>
+    <!-- drifting satellite clouds for gentle wavy motion -->
+    <div class="cloud-1 absolute left-[38%] top-[42%] h-[380px] w-[380px] rounded-full"
+         style="background: radial-gradient(circle, rgba(92,74,0,0.30) 0%, transparent 66%); filter: blur(80px);"></div>
+    <div class="cloud-2 absolute left-[60%] top-[55%] h-[420px] w-[420px] rounded-full"
+         style="background: radial-gradient(circle, rgba(92,40,32,0.32) 0%, transparent 66%); filter: blur(85px);"></div>
+    <div class="cloud-3 absolute left-1/2 top-[38%] h-[300px] w-[300px] rounded-full"
+         style="background: radial-gradient(circle, rgba(232,168,158,0.16) 0%, transparent 64%); filter: blur(75px);"></div>
   </div>
 
   <!-- Cursor trail elements -->
@@ -74,14 +70,14 @@
     <!-- Profile header -->
     <header class="fade-up flex flex-col items-center text-center">
       <div class="relative">
-        <div class="absolute -inset-3 rounded-full bg-[#E8D07A]/20 blur-2xl" aria-hidden="true"></div>
+        <div class="absolute -inset-3 rounded-full bg-[#E8D07A]/25 blur-2xl" aria-hidden="true"></div>
         <img
           src="https://file.garden/aYCdlBqIC3TWlgqn/9e83f982176b951da1fc39a1568dce75-modified.png"
           alt="Kinosaki avatar"
           class="relative h-24 w-24 rounded-full border-2 border-[#503820] bg-[#231508] object-cover"
         />
       </div>
-      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-[#F5E4A0] [text-shadow:0_0_28px_rgba(232,208,122,0.45)]">Kinosaki</h1>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-[#F5E4A0] [text-shadow:0_0_34px_rgba(232,208,122,0.55)]">Kinosaki</h1>
       <p class="mt-1 text-sm text-[#CDB898]">he/him · India · Jan 31</p>
     </header>
 
