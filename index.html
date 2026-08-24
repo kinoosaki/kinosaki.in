@@ -51,8 +51,12 @@
       --glow-3: rgba(232,168,158,0.36);
     }
 
-    body { font-family: 'Roboto Flex', system-ui, sans-serif; cursor: none; background: var(--bg); color: var(--text); transition: background .5s ease, color .5s ease; }
-    a, button, [role="button"] { cursor: none; }
+    body { 
+      font-family: 'Roboto Flex', system-ui, sans-serif; 
+      background: var(--bg); 
+      color: var(--text); 
+      transition: background .5s ease, color .5s ease; 
+    }
 
     @keyframes fade-up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
     
@@ -90,23 +94,26 @@
     .cloud-1 { animation: drift-1 19s ease-in-out infinite; will-change: transform; }
     .cloud-2 { animation: drift-2 24s ease-in-out infinite; will-change: transform; }
     .cloud-3 { animation: drift-3 28s ease-in-out infinite; will-change: transform; }
-    .spring { transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s; }
+    .spring { transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s, filter .2s; }
 
-    /* card surfaces via vars */
-    .card { background: var(--surface); border-color: var(--border); }
+    /* Card surfaces & ultra-subtle hover border highlight */
+    .card { 
+      background: var(--surface); 
+      border-color: var(--border); 
+      transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+    }
+    .card:hover {
+      border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+      box-shadow: 0 0 10px 0px color-mix(in srgb, var(--primary) 8%, transparent);
+    }
+
     .tile { background: var(--tile); }
     .tile:hover { background: var(--tile-hover); }
 
-    /* cursor trail */
-    .cursor-dot, .cursor-ring, .trail {
-      position: fixed; top:0; left:0; border-radius:9999px; pointer-events:none; z-index:9999;
-      transform: translate(-50%,-50%); will-change: transform; opacity: 0; transition: opacity .2s ease;
+    /* Pill hover style */
+    .pill:hover {
+      filter: brightness(1.14);
     }
-    .cursor-dot { width:8px; height:8px; background:var(--heading); box-shadow:0 0 12px var(--primary); }
-    .cursor-ring { width:34px; height:34px; border:1.5px solid var(--primary); opacity: 0; transition: width .2s, height .2s, background .2s, border-color .2s, opacity .2s; }
-    .cursor-ring.active { width:52px; height:52px; background:color-mix(in srgb, var(--primary) 12%, transparent); opacity:.9 !important; }
-    .trail { width:6px; height:6px; }
-    @media (hover: none) { body, a, button { cursor:auto; } .cursor-dot,.cursor-ring,.trail { display:none; } }
   </style>
 </head>
 <body class="min-h-screen antialiased overflow-x-hidden">
@@ -131,10 +138,6 @@
     <svg id="iconSun" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </button>
 
-  <!-- Cursor elements -->
-  <div class="cursor-ring" id="cursorRing"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
-
   <main class="relative mx-auto flex min-h-screen max-w-md flex-col gap-4 px-4 py-10">
 
     <!-- Profile header -->
@@ -158,14 +161,14 @@
         hello! im into music, anime, reading manga, manhwa, light novels, fiction and more! im not much of a gamer and as a sport i play badminton occasionally. my fav genres are action, romance and slice of life!
       </p>
       <ul class="mt-4 flex flex-wrap gap-2">
-        <li class="rounded-full px-3 py-1 text-xs font-medium" style="background: var(--chip-a); color: var(--chip-a-text);">12th Grade</li>
-        <li class="rounded-full px-3 py-1 text-xs font-medium" style="background: var(--chip-a); color: var(--chip-a-text);">17 yrs</li>
-        <li class="rounded-full px-3 py-1 text-xs font-medium" style="background: var(--chip-a); color: var(--chip-a-text);">PCM</li>
-        <li class="rounded-full px-3 py-1 text-xs font-medium" style="background: var(--chip-b); color: var(--chip-b-text);">Music</li>
-        <li class="rounded-full px-3 py-1 text-xs font-medium" style="background: var(--chip-b); color: var(--chip-b-text);">Animanga</li>
-        <li class="rounded-full px-3 py-1 text-xs font-medium" style="background: var(--chip-b); color: var(--chip-b-text);">Tech</li>
-        <li class="rounded-full px-3 py-1 text-xs font-medium" style="background: var(--chip-b); color: var(--chip-b-text);">Gaming</li>
-        <li class="rounded-full px-3 py-1 text-xs font-medium" style="background: var(--chip-b); color: var(--chip-b-text);">Badminton</li>
+        <li class="pill spring rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset hover:-translate-y-0.5" style="background: var(--chip-a); color: var(--chip-a-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">12th Grade</li>
+        <li class="pill spring rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset hover:-translate-y-0.5" style="background: var(--chip-a); color: var(--chip-a-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">17 yrs</li>
+        <li class="pill spring rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset hover:-translate-y-0.5" style="background: var(--chip-a); color: var(--chip-a-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">PCM</li>
+        <li class="pill spring rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset hover:-translate-y-0.5" style="background: var(--chip-b); color: var(--chip-b-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">Music</li>
+        <li class="pill spring rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset hover:-translate-y-0.5" style="background: var(--chip-b); color: var(--chip-b-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">Animanga</li>
+        <li class="pill spring rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset hover:-translate-y-0.5" style="background: var(--chip-b); color: var(--chip-b-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">Tech</li>
+        <li class="pill spring rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset hover:-translate-y-0.5" style="background: var(--chip-b); color: var(--chip-b-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">Gaming</li>
+        <li class="pill spring rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset hover:-translate-y-0.5" style="background: var(--chip-b); color: var(--chip-b-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">Badminton</li>
       </ul>
     </section>
 
@@ -206,7 +209,7 @@
           GitHub
         </a>
         <a href="https://www.reddit.com/user/icedchocolatecake/" target="_blank" rel="noopener" class="tile spring group flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium ring-1 ring-inset hover:-translate-y-0.5" style="color: var(--chip-b-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">
-          <svg class="h-4 w-4" style="fill: var(--primary);" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
+          <svg class="h-4 w-4" style="fill: var(--primary);" viewBox="0 0 24 24"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.688-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>
           Reddit
         </a>
         <a href="https://open.spotify.com/user/31y7qiwjuxzkzaxryynn6gmyyhr4" target="_blank" rel="noopener" class="tile spring group flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium ring-1 ring-inset hover:-translate-y-0.5" style="color: var(--chip-b-text); --tw-ring-color: color-mix(in srgb, var(--border) 60%, transparent);">
@@ -238,65 +241,21 @@
       const iconMoon = document.getElementById('iconMoon');
       const iconSun = document.getElementById('iconSun');
       function applyTheme(mode) {
-        if (mode === 'light') { root.classList.add('light'); iconMoon.classList.add('hidden'); iconSun.classList.remove('hidden'); }
-        else { root.classList.remove('light'); iconSun.classList.add('hidden'); iconMoon.classList.remove('hidden'); }
+        if (mode === 'light') { 
+          root.classList.add('light'); 
+          iconMoon.classList.add('hidden'); 
+          iconSun.classList.remove('hidden'); 
+        } else { 
+          root.classList.remove('light'); 
+          iconSun.classList.add('hidden'); 
+          iconMoon.classList.remove('hidden'); 
+        }
       }
       let theme = 'dark';
       applyTheme(theme);
-      toggle.addEventListener('click', () => { theme = theme === 'dark' ? 'light' : 'dark'; applyTheme(theme); });
-
-      /* ---- Cursor and trails only (glow runs independently) ---- */
-      const dot = document.getElementById('cursorDot');
-      const ring = document.getElementById('cursorRing');
-      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-      let ringX = mouseX, ringY = mouseY;
-      let hasMoved = false;
-
-      const trailColors = ['#F5E4A0', '#E8D07A', '#E8A89E', '#C08878'];
-      const trails = [];
-      const TRAIL_COUNT = 14;
-      for (let i = 0; i < TRAIL_COUNT; i++) {
-        const t = document.createElement('div');
-        t.className = 'trail';
-        t.style.background = trailColors[i % trailColors.length];
-        t.style.opacity = '0';
-        document.body.appendChild(t);
-        trails.push({ el: t, x: mouseX, y: mouseY });
-      }
-
-      window.addEventListener('mousemove', (e) => {
-        if (!hasMoved) {
-          hasMoved = true;
-          dot.style.opacity = '1';
-          ring.style.opacity = '0.6';
-        }
-        mouseX = e.clientX; mouseY = e.clientY;
-        dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%,-50%)`;
-      });
-
-      function animate() {
-        // ring easing
-        ringX += (mouseX - ringX) * 0.18;
-        ringY += (mouseY - ringY) * 0.18;
-        ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%,-50%)`;
-
-        // trail chain
-        let px = mouseX, py = mouseY;
-        trails.forEach((t, i) => {
-          t.x += (px - t.x) * 0.35;
-          t.y += (py - t.y) * 0.35;
-          const scale = 1 - i / TRAIL_COUNT;
-          t.el.style.transform = `translate(${t.x}px, ${t.y}px) translate(-50%,-50%) scale(${scale})`;
-          t.el.style.opacity = hasMoved ? String(scale * 0.45) : '0';
-          px = t.x; py = t.y;
-        });
-        requestAnimationFrame(animate);
-      }
-      animate();
-
-      document.querySelectorAll('a, button').forEach((el) => {
-        el.addEventListener('mouseenter', () => ring.classList.add('active'));
-        el.addEventListener('mouseleave', () => ring.classList.remove('active'));
+      toggle.addEventListener('click', () => { 
+        theme = theme === 'dark' ? 'light' : 'dark'; 
+        applyTheme(theme); 
       });
     })();
   </script>
