@@ -81,7 +81,7 @@
       100% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(-360deg) scale(1.1); }
     }
     @keyframes drift-3 {
-      0% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); }
+      0% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(0deg) scale(1); }
       33% { transform: translate(-50%, -50%) translate(90px, 100px) scale(1.28); }
       66% { transform: translate(-50%, -50%) translate(-110px, -60px) scale(0.84); }
       100% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); }
@@ -114,6 +114,11 @@
     .pill:hover {
       filter: brightness(1.14);
     }
+
+    /* Spotify theme visibility toggle */
+    #spotifyLight { display: none; }
+    html.light #spotifyDark { display: none; }
+    html.light #spotifyLight { display: block; }
   </style>
 </head>
 <body class="min-h-screen antialiased overflow-x-hidden">
@@ -187,9 +192,14 @@
       <div class="mb-3 flex items-center justify-between">
         <h2 id="music-heading" class="text-xs font-semibold uppercase tracking-wider" style="color: var(--primary);">Now Playing</h2>
       </div>
-      <a href="https://open.spotify.com/user/31y7qiwjuxzkzaxryynn6gmyyhr4" target="_blank" rel="noopener" class="block">
-        <img src="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&cover_image=true&theme=natemoo-re&show_offline=true&background_color=121212&interchange=true&profanity=false&hide_remaster=false&bar_color=53b14f&bar_color_cover=true" alt="Spotify now playing" class="block w-full rounded-xl transition hover:opacity-90" />
-      </a>
+      <div class="flex justify-center">
+        <a href="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&redirect=true" target="_blank" rel="noopener" class="block w-full">
+          <!-- Dark mode Spotify widget -->
+          <img id="spotifyDark" src="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&cover_image=true&theme=spotify-embed&show_offline=true&background_color=121212&interchange=false&profanity=false&hide_remaster=false&bar_color_cover=true&bar_color=53b14f&mode=dark" alt="Spotify now playing" class="block w-full rounded-xl transition hover:opacity-90" />
+          <!-- Light mode Spotify widget -->
+          <img id="spotifyLight" src="https://spotify-github-profile.kittinanx.com/api/view?uid=31y7qiwjuxzkzaxryynn6gmyyhr4&cover_image=true&theme=spotify-embed&show_offline=true&background_color=121212&interchange=false&profanity=false&hide_remaster=false&bar_color_cover=true&bar_color=53b14f&mode=light" alt="Spotify now playing" class="w-full rounded-xl transition hover:opacity-90" />
+        </a>
+      </div>
     </section>
 
     <!-- Social links card -->
