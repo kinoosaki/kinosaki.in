@@ -81,7 +81,7 @@
       100% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(-360deg) scale(1.1); }
     }
     @keyframes drift-3 {
-      0% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(0deg) scale(1); }
+      0% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); }
       33% { transform: translate(-50%, -50%) translate(90px, 100px) scale(1.28); }
       66% { transform: translate(-50%, -50%) translate(-110px, -60px) scale(0.84); }
       100% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); }
@@ -96,15 +96,39 @@
     .cloud-3 { animation: drift-3 28s ease-in-out infinite; will-change: transform; }
     .spring { transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s, filter .2s; }
 
-    /* Card surfaces & ultra-subtle hover border highlight */
+    /* Card surfaces & dynamic edge glow */
     .card { 
+      position: relative;
       background: var(--surface); 
       border-color: var(--border); 
-      transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+      transition: background 0.35s ease, border-color 0.35s ease;
     }
-    .card:hover {
-      border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
-      box-shadow: 0 0 10px 0px color-mix(in srgb, var(--primary) 8%, transparent);
+
+    /* Dynamic cursor-tracking border spotlight */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: radial-gradient(
+        220px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+        color-mix(in srgb, var(--primary) 70%, transparent) 0%,
+        color-mix(in srgb, var(--primary) 20%, transparent) 45%,
+        transparent 80%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: 2;
+    }
+
+    .card:hover::before {
+      opacity: 1;
     }
 
     .tile { background: var(--tile); }
@@ -266,6 +290,17 @@
       toggle.addEventListener('click', () => { 
         theme = theme === 'dark' ? 'light' : 'dark'; 
         applyTheme(theme); 
+      });
+
+      /* ---- Dynamic edge glow spotlight tracking ---- */
+      document.querySelectorAll('.card').forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
       });
     })();
   </script>
