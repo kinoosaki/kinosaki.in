@@ -11,36 +11,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0F0A06;
-      --bg-overlay: rgba(15, 10, 6, 0.72);
-      --surface: rgba(35, 21, 8, 0.68);
-      --tile: rgba(44, 28, 14, 0.85);
-      --tile-hover: rgba(58, 38, 20, 0.95);
-      --text: #F0E0C8;
-      --muted: #CDB898;
-      --primary: #E8D07A;
-      --heading: #F5E4A0;
-      --border: rgba(80, 56, 32, 0.6);
-      --chip-a: rgba(92, 40, 32, 0.8);
-      --chip-a-text: #F5CFC8;
-      --chip-b: rgba(74, 32, 24, 0.75);
-      --chip-b-text: #E8C0B0;
+      --bg: #0D0B14;
+      --bg-overlay: rgba(13, 11, 20, 0.72);
+      --surface: rgba(26, 20, 36, 0.65);
+      --tile: rgba(42, 31, 58, 0.75);
+      --tile-hover: rgba(58, 42, 78, 0.88);
+      --text: #FBEBF1;
+      --muted: #CAB6C4;
+      --primary: #FF9EBA;
+      --heading: #FFE0EC;
+      --border: rgba(175, 128, 160, 0.32);
+      --chip-a: rgba(118, 46, 78, 0.75);
+      --chip-a-text: #FFD6E6;
+      --chip-b: rgba(56, 38, 76, 0.75);
+      --chip-b-text: #EBD9F5;
     }
     html.light {
-      --bg: #F3ECDD;
-      --bg-overlay: rgba(243, 236, 221, 0.68);
-      --surface: rgba(255, 250, 240, 0.75);
-      --tile: rgba(237, 227, 208, 0.85);
-      --tile-hover: rgba(228, 215, 190, 0.95);
-      --text: #3B2B14;
-      --muted: #7C6743;
-      --primary: #9A6B00;
-      --heading: #6E4A00;
-      --border: rgba(220, 205, 178, 0.8);
-      --chip-a: rgba(233, 199, 191, 0.85);
-      --chip-a-text: #7A342A;
-      --chip-b: rgba(231, 216, 192, 0.85);
-      --chip-b-text: #6A4A2C;
+      --bg: #FDF5F8;
+      --bg-overlay: rgba(253, 245, 248, 0.68);
+      --surface: rgba(255, 248, 251, 0.82);
+      --tile: rgba(246, 231, 238, 0.9);
+      --tile-hover: rgba(239, 218, 228, 0.95);
+      --text: #34202B;
+      --muted: #725968;
+      --primary: #C9466D;
+      --heading: #6A1633;
+      --border: rgba(220, 178, 196, 0.65);
+      --chip-a: rgba(255, 216, 228, 0.9);
+      --chip-a-text: #781E3B;
+      --chip-b: rgba(240, 225, 240, 0.9);
+      --chip-b-text: #4E274D;
     }
 
     body { 
@@ -62,11 +62,39 @@
     
     .spring { transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s, filter .2s; }
 
-    /* Card surfaces */
+    /* Card surfaces & dynamic edge glow */
     .card { 
+      position: relative;
       background: var(--surface); 
       border-color: var(--border); 
-      transition: background 0.3s ease, border-color 0.3s ease;
+      transition: background 0.35s ease, border-color 0.35s ease;
+    }
+
+    /* Dynamic cursor-tracking border spotlight */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      padding: 1px;
+      background: radial-gradient(
+        220px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+        color-mix(in srgb, var(--primary) 75%, transparent) 0%,
+        color-mix(in srgb, var(--primary) 22%, transparent) 45%,
+        transparent 80%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      z-index: 2;
+    }
+
+    .card:hover::before {
+      opacity: 1;
     }
 
     .tile { background: var(--tile); }
@@ -74,7 +102,7 @@
 
     /* Pill hover style */
     .pill:hover {
-      filter: brightness(1.14);
+      filter: brightness(1.15);
     }
   </style>
 </head>
@@ -207,6 +235,17 @@
       toggle.addEventListener('click', () => { 
         theme = theme === 'dark' ? 'light' : 'dark'; 
         applyTheme(theme); 
+      });
+
+      /* ---- Dynamic edge glow spotlight tracking ---- */
+      document.querySelectorAll('.card').forEach((card) => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
       });
     })();
   </script>
