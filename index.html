@@ -12,123 +12,61 @@
   <style>
     :root {
       --bg: #0F0A06;
-      --surface: rgba(35,21,8,0.55);
-      --tile: #2C1C0E;
-      --tile-hover: #3A2614;
+      --bg-overlay: rgba(15, 10, 6, 0.72);
+      --surface: rgba(35, 21, 8, 0.68);
+      --tile: rgba(44, 28, 14, 0.85);
+      --tile-hover: rgba(58, 38, 20, 0.95);
       --text: #F0E0C8;
       --muted: #CDB898;
       --primary: #E8D07A;
       --heading: #F5E4A0;
-      --border: #503820;
-      --chip-a: #5C2820;
+      --border: rgba(80, 56, 32, 0.6);
+      --chip-a: rgba(92, 40, 32, 0.8);
       --chip-a-text: #F5CFC8;
-      --chip-b: #4A2018;
+      --chip-b: rgba(74, 32, 24, 0.75);
       --chip-b-text: #E8C0B0;
-      --glow-core: rgba(232,208,122,0.38);
-      --glow-core-2: rgba(210,130,105,0.26);
-      --glow-1: rgba(130,95,15,0.42);
-      --glow-2: rgba(125,48,38,0.40);
-      --glow-3: rgba(232,168,158,0.24);
     }
     html.light {
       --bg: #F3ECDD;
-      --surface: rgba(255,250,240,0.65);
-      --tile: #EDE3D0;
-      --tile-hover: #E4D7BE;
+      --bg-overlay: rgba(243, 236, 221, 0.68);
+      --surface: rgba(255, 250, 240, 0.75);
+      --tile: rgba(237, 227, 208, 0.85);
+      --tile-hover: rgba(228, 215, 190, 0.95);
       --text: #3B2B14;
       --muted: #7C6743;
       --primary: #9A6B00;
       --heading: #6E4A00;
-      --border: #DCCDB2;
-      --chip-a: #E9C7BF;
+      --border: rgba(220, 205, 178, 0.8);
+      --chip-a: rgba(233, 199, 191, 0.85);
       --chip-a-text: #7A342A;
-      --chip-b: #E7D8C0;
+      --chip-b: rgba(231, 216, 192, 0.85);
       --chip-b-text: #6A4A2C;
-      --glow-core: rgba(232,196,90,0.48);
-      --glow-core-2: rgba(214,150,120,0.34);
-      --glow-1: rgba(232,196,90,0.40);
-      --glow-2: rgba(214,120,100,0.34);
-      --glow-3: rgba(232,168,158,0.36);
     }
 
     body { 
       font-family: 'Montserrat', system-ui, sans-serif; 
-      background: var(--bg); 
       color: var(--text); 
-      transition: background .5s ease, color .5s ease; 
+      background-color: var(--bg);
+      background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://w.wallhaven.cc/full/yq/wallhaven-yqg6r7.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      transition: color .5s ease, background-color .5s ease; 
     }
 
     @keyframes fade-up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-    
-    /* Autonomous, organic fluid ambient glow animations */
-    @keyframes core-drift {
-      0% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); opacity: 0.8; }
-      25% { transform: translate(-50%, -50%) translate(70px, -60px) scale(1.15); opacity: 1; }
-      50% { transform: translate(-50%, -50%) translate(-50px, 70px) scale(0.92); opacity: 0.85; }
-      75% { transform: translate(-50%, -50%) translate(-80px, -40px) scale(1.18); opacity: 0.95; }
-      100% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); opacity: 0.8; }
-    }
-    @keyframes drift-1 {
-      0% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(0deg) scale(1); }
-      33% { transform: translate(-50%, -50%) translate(-110px, 80px) rotate(120deg) scale(1.25); }
-      66% { transform: translate(-50%, -50%) translate(80px, -90px) rotate(240deg) scale(0.88); }
-      100% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(360deg) scale(1); }
-    }
-    @keyframes drift-2 {
-      0% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(0deg) scale(1.1); }
-      33% { transform: translate(-50%, -50%) translate(110px, -70px) rotate(-120deg) scale(0.9); }
-      66% { transform: translate(-50%, -50%) translate(-85px, 100px) rotate(-240deg) scale(1.22); }
-      100% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(-360deg) scale(1.1); }
-    }
-    @keyframes drift-3 {
-      0% { transform: translate(-50%, -50%) translate(0px, 0px) scale(1); }
-      33% { transform: translate(-50%, -50%) translate(90px, 100px) scale(1.28); }
-      66% { transform: translate(-50%, -50%) translate(-110px, -60px) scale(0.84); }
-      100% { transform: translate(-50%, -50%) translate(0px, 0px) rotate(0deg) scale(1); }
-    }
 
     .fade-up { animation: fade-up .55s cubic-bezier(0.2,0,0,1) both; }
     .d2 { animation-delay:.08s } .d3 { animation-delay:.16s } .d4 { animation-delay:.24s } .d5 { animation-delay:.32s }
     
-    .core-glow { animation: core-drift 14s ease-in-out infinite; will-change: transform, opacity; }
-    .cloud-1 { animation: drift-1 19s ease-in-out infinite; will-change: transform; }
-    .cloud-2 { animation: drift-2 24s ease-in-out infinite; will-change: transform; }
-    .cloud-3 { animation: drift-3 28s ease-in-out infinite; will-change: transform; }
     .spring { transition: transform .4s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s, filter .2s; }
 
-    /* Card surfaces & dynamic edge glow */
+    /* Card surfaces */
     .card { 
-      position: relative;
       background: var(--surface); 
       border-color: var(--border); 
-      transition: background 0.35s ease, border-color 0.35s ease;
-    }
-
-    /* Dynamic cursor-tracking border spotlight */
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: -1px;
-      border-radius: inherit;
-      padding: 1px;
-      background: radial-gradient(
-        220px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
-        color-mix(in srgb, var(--primary) 70%, transparent) 0%,
-        color-mix(in srgb, var(--primary) 20%, transparent) 45%,
-        transparent 80%
-      );
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask-composite: exclude;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      z-index: 2;
-    }
-
-    .card:hover::before {
-      opacity: 1;
+      transition: background 0.3s ease, border-color 0.3s ease;
     }
 
     .tile { background: var(--tile); }
@@ -141,18 +79,6 @@
   </style>
 </head>
 <body class="min-h-screen antialiased overflow-x-hidden">
-
-  <!-- Background: autonomously moving dynamic glow clouds -->
-  <div class="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden="true">
-    <div id="coreGlow" class="core-glow absolute left-1/2 top-1/2 h-[750px] w-[750px] rounded-full"
-         style="background: radial-gradient(circle, var(--glow-core) 0%, var(--glow-core-2) 42%, transparent 72%); filter: blur(105px);"></div>
-    <div id="cloud1" class="cloud-1 absolute left-[32%] top-[35%] h-[620px] w-[620px] rounded-full"
-         style="background: radial-gradient(circle, var(--glow-1) 0%, transparent 70%); filter: blur(120px);"></div>
-    <div id="cloud2" class="cloud-2 absolute left-[66%] top-[58%] h-[680px] w-[680px] rounded-full"
-         style="background: radial-gradient(circle, var(--glow-2) 0%, transparent 70%); filter: blur(135px);"></div>
-    <div id="cloud3" class="cloud-3 absolute left-[48%] top-[42%] h-[560px] w-[560px] rounded-full"
-         style="background: radial-gradient(circle, var(--glow-3) 0%, transparent 68%); filter: blur(115px);"></div>
-  </div>
 
   <!-- Theme toggle -->
   <button id="themeToggle" aria-label="Toggle color theme"
@@ -167,14 +93,13 @@
     <!-- Profile header -->
     <header class="fade-up flex flex-col items-center text-center">
       <div class="relative">
-        <div class="absolute -inset-4 rounded-full blur-2xl" style="background: color-mix(in srgb, var(--primary) 35%, transparent);" aria-hidden="true"></div>
         <img
           src="https://file.garden/aYCdlBqIC3TWlgqn/9e83f982176b951da1fc39a1568dce75-modified.png"
           alt="Kinosaki avatar"
           class="relative h-24 w-24 rounded-full border-2 object-cover shadow-lg" style="border-color: var(--border); background: var(--tile);"
         />
       </div>
-      <h1 class="mt-4 text-3xl font-extrabold tracking-tight" style="color: var(--heading); text-shadow: 0 0 34px color-mix(in srgb, var(--primary) 55%, transparent);">Kinosaki</h1>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight" style="color: var(--heading);">Kinosaki</h1>
       <p class="mt-1 text-sm font-medium" style="color: var(--muted);">he/him · India · Jan 31</p>
     </header>
 
@@ -282,17 +207,6 @@
       toggle.addEventListener('click', () => { 
         theme = theme === 'dark' ? 'light' : 'dark'; 
         applyTheme(theme); 
-      });
-
-      /* ---- Dynamic edge glow spotlight tracking ---- */
-      document.querySelectorAll('.card').forEach((card) => {
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty('--mouse-x', `${x}px`);
-          card.style.setProperty('--mouse-y', `${y}px`);
-        });
       });
     })();
   </script>
