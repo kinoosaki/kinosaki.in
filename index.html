@@ -55,6 +55,10 @@
       transition: color .5s ease, background-color .5s ease; 
     }
 
+    body.wallpaper-only {
+      background-image: url('./wallhaven-3q2rqd.jpg');
+    }
+
     @keyframes fade-up { 
       from { opacity: 0; transform: translateY(16px); } 
       to { opacity: 1; transform: translateY(0); } 
@@ -216,7 +220,7 @@
 
   </main>
 
-  <footer class="relative z-10 pb-3 text-center text-xs" style="color: var(--muted);">
+  <footer class="fixed bottom-3 left-1/2 z-40 -translate-x-1/2 whitespace-nowrap text-center text-xs" style="color: var(--muted);">
     This site was made with AI.
   </footer>
 
