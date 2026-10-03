@@ -65,14 +65,12 @@
     
     .spring { transition: transform .35s cubic-bezier(0.34,1.56,0.64,1), border-color .2s, background .2s, box-shadow .2s, filter .2s; }
 
-    /* Card surfaces, 3D transform & border glow */
+    /* Card surfaces and border glow */
     .card { 
       position: relative;
       background: var(--surface); 
       border-color: var(--border); 
-      transform-style: preserve-3d;
-      will-change: transform;
-      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.35s ease, border-color 0.35s ease;
+      transition: background 0.35s ease, border-color 0.35s ease;
     }
 
     /* Dynamic cursor-tracking border spotlight */
@@ -123,8 +121,8 @@
     <svg id="iconSun" class="hidden h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
   </button>
 
-  <!-- Centered 2-Card Layout with 3D Perspective Container -->
-  <main class="relative z-10 mx-auto flex min-h-screen lg:h-screen lg:max-h-screen max-w-5xl flex-col justify-center px-4 py-8 lg:py-6 lg:px-8" style="perspective: 1200px;">
+  <!-- Centered 2-Card Layout -->
+  <main class="relative z-10 mx-auto flex min-h-screen lg:h-screen lg:max-h-screen max-w-5xl flex-col justify-center px-4 py-8 lg:py-6 lg:px-8">
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 lg:gap-6 items-stretch w-full my-auto">
 
@@ -260,14 +258,7 @@
       updateClock();
       setInterval(updateClock, 1000);
 
-      /* ---- 3D Tilt & Border Spotlight Tracking ---- */
-      // Remove initial fade-up keyframe locks so transform isn't overridden
-      setTimeout(() => {
-        document.querySelectorAll('.card').forEach((card) => {
-          card.style.animation = 'none';
-        });
-      }, 700);
-
+      /* ---- Border Spotlight Tracking ---- */
       document.querySelectorAll('.card').forEach((card) => {
         card.addEventListener('mousemove', (e) => {
           const rect = card.getBoundingClientRect();
@@ -278,19 +269,9 @@
           card.style.setProperty('--mouse-x', `${x}px`);
           card.style.setProperty('--mouse-y', `${y}px`);
 
-          // 3D Tilt calculation (12 degree dynamic tilt)
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const rotateX = ((y - centerY) / centerY) * -11.5;
-          const rotateY = ((x - centerX) / centerX) * 11.5;
-
-          card.style.transition = 'transform 0.1s ease-out, background 0.35s ease, border-color 0.35s ease';
-          card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.02, 1.02, 1.02)`;
         });
 
         card.addEventListener('mouseleave', () => {
-          card.style.transition = 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.35s ease, border-color 0.35s ease';
-          card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
           card.style.setProperty('--mouse-x', `-999px`);
           card.style.setProperty('--mouse-y', `-999px`);
         });
