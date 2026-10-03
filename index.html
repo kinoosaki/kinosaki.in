@@ -216,11 +216,32 @@
 
   </main>
 
+  <footer class="relative z-10 pb-3 text-center text-xs" style="color: var(--muted);">
+    This site was made with AI.
+  </footer>
+
+  <div class="fixed bottom-4 right-4 z-50 flex items-center gap-2">
+    <a href="./wallhaven-3q2rqd.jpg" download
+      class="spring flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md hover:scale-110"
+      style="background: var(--surface); border-color: var(--border); color: var(--primary);"
+      aria-label="Download wallpaper" title="Download wallpaper">
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+    </a>
+    <button id="wallpaperToggle" type="button" aria-label="Show wallpaper only" title="Show wallpaper only"
+      class="spring flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md hover:scale-110"
+      style="background: var(--surface); border-color: var(--border); color: var(--primary);">
+      <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M16 3h3a2 2 0 0 1 2 2v3"/><path d="M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+    </button>
+  </div>
+
   <script>
     (function () {
       /* ---- Theme toggle ---- */
       const root = document.documentElement;
       const toggle = document.getElementById('themeToggle');
+      const wallpaperToggle = document.getElementById('wallpaperToggle');
+      const main = document.querySelector('main');
+      const footer = document.querySelector('footer');
       const iconMoon = document.getElementById('iconMoon');
       const iconSun = document.getElementById('iconSun');
       function applyTheme(mode) {
@@ -239,6 +260,15 @@
       toggle.addEventListener('click', () => { 
         theme = theme === 'dark' ? 'light' : 'dark'; 
         applyTheme(theme); 
+      });
+
+      wallpaperToggle.addEventListener('click', () => {
+        const wallpaperOnly = document.body.classList.toggle('wallpaper-only');
+        main.classList.toggle('hidden', wallpaperOnly);
+        footer.classList.toggle('hidden', wallpaperOnly);
+        const label = wallpaperOnly ? 'Show cards' : 'Show wallpaper only';
+        wallpaperToggle.setAttribute('aria-label', label);
+        wallpaperToggle.setAttribute('title', label);
       });
 
       /* ---- Live Time (India - IST) ---- */
