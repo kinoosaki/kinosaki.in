@@ -1,1 +1,1 @@
-This website was made with AI.
+This website is made with AI.

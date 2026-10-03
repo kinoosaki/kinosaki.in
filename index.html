@@ -270,6 +270,7 @@
         const wallpaperOnly = document.body.classList.toggle('wallpaper-only');
         main.classList.toggle('hidden', wallpaperOnly);
         footer.classList.toggle('hidden', wallpaperOnly);
+        document.getElementById('sakuraCanvas').classList.toggle('hidden', wallpaperOnly);
         const label = wallpaperOnly ? 'Show cards' : 'Show wallpaper only';
         wallpaperToggle.setAttribute('aria-label', label);
         wallpaperToggle.setAttribute('title', label);
