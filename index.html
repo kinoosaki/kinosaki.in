@@ -11,43 +11,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0D0B14;
-      --bg-overlay: rgba(13, 11, 20, 0.72);
-      --surface: rgba(26, 20, 36, 0.68);
-      --tile: rgba(42, 31, 58, 0.75);
-      --tile-hover: rgba(58, 42, 78, 0.88);
-      --text: #FBEBF1;
-      --muted: #CAB6C4;
-      --primary: #FF9EBA;
-      --heading: #FFE0EC;
-      --border: rgba(175, 128, 160, 0.32);
-      --chip-a: rgba(118, 46, 78, 0.75);
-      --chip-a-text: #FFD6E6;
-      --chip-b: rgba(56, 38, 76, 0.75);
-      --chip-b-text: #EBD9F5;
+      --bg: #07112d;
+      --bg-overlay: rgba(5, 12, 34, 0.52);
+      --surface: rgba(8, 20, 48, 0.82);
+      --tile: rgba(20, 39, 79, 0.86);
+      --tile-hover: rgba(34, 56, 101, 0.96);
+      --text: #edf1ff;
+      --muted: #b9c8ec;
+      --primary: #ff786c;
+      --heading: #fff0dd;
+      --border: rgba(117, 151, 229, 0.38);
+      --chip-a: rgba(116, 49, 76, 0.82);
+      --chip-a-text: #ffe0d7;
+      --chip-b: rgba(31, 59, 111, 0.88);
+      --chip-b-text: #dce7ff;
     }
     html.light {
-      --bg: #FDF5F8;
-      --bg-overlay: rgba(253, 245, 248, 0.68);
-      --surface: rgba(255, 248, 251, 0.82);
-      --tile: rgba(246, 231, 238, 0.9);
-      --tile-hover: rgba(239, 218, 228, 0.95);
-      --text: #34202B;
-      --muted: #725968;
-      --primary: #C9466D;
-      --heading: #6A1633;
-      --border: rgba(220, 178, 196, 0.65);
-      --chip-a: rgba(255, 216, 228, 0.9);
-      --chip-a-text: #781E3B;
-      --chip-b: rgba(240, 225, 240, 0.9);
-      --chip-b-text: #4E274D;
+      --bg: #e9edfb;
+      --bg-overlay: rgba(228, 234, 251, 0.70);
+      --surface: rgba(245, 247, 255, 0.88);
+      --tile: rgba(219, 228, 250, 0.94);
+      --tile-hover: rgba(203, 215, 245, 0.98);
+      --text: #18264b;
+      --muted: #4e5e84;
+      --primary: #c74550;
+      --heading: #762b43;
+      --border: rgba(83, 111, 177, 0.42);
+      --chip-a: rgba(255, 218, 211, 0.94);
+      --chip-a-text: #7a2c3b;
+      --chip-b: rgba(210, 222, 249, 0.95);
+      --chip-b-text: #293e70;
     }
 
     body { 
       font-family: 'Montserrat', system-ui, sans-serif; 
       color: var(--text); 
       background-color: var(--bg);
-      background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('https://w.wallhaven.cc/full/yq/wallhaven-yqg6r7.jpg');
+      background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('./wallhaven-3q2rqd.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -310,10 +310,10 @@
       const petals = [];
       const TOTAL_PETALS = 38;
       const petalColors = [
-        'rgba(255, 183, 197, ',
-        'rgba(255, 197, 211, ',
-        'rgba(247, 142, 168, ',
-        'rgba(255, 218, 225, '
+        'rgba(255, 111, 91, ',
+        'rgba(255, 145, 91, ',
+        'rgba(255, 184, 105, ',
+        'rgba(255, 215, 173, '
       ];
 
       class Petal {
